@@ -1,1 +1,8 @@
 @import "tailwindcss";
+
+/* Add these styles for SweetAlert customization */
+.sweet-title {
+  font-size: 24px !important;
+  color: #333 !important;
+}
+  

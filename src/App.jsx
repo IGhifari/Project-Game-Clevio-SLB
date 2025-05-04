@@ -4,6 +4,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import HalamanAwal from './components/halamanAwal';
 import HalamanLevel from './components/halamanLevel';
 import RumahMain from './components/rumahMain';
+import SekolahMain from './components/sekolahMain';
 function App() {
 
   return (
@@ -12,6 +13,8 @@ function App() {
         <Route path="/" element={<HalamanAwal />} />
         <Route path="/halamanlevel" element={<HalamanLevel />} />
         <Route path="/rumahmain" element={<RumahMain />} />
+        <Route path="/sekolahmain" element={<SekolahMain />} />
+        {/* Add more routes as needed */}
       </Routes>
     </BrowserRouter>
   )

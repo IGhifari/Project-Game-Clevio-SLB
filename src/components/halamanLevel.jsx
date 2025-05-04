@@ -3,17 +3,45 @@ import Swal from 'sweetalert2'; // Import SweetAlert2
 import backgroundImage from '../assets/background/levelchoiche.png'; // Pastikan path ke gambar sesuai
 import rumahImage from '../assets/background/cardrumah.png'; // Gambar untuk level "Di Rumah"
 import sekolahImage from '../assets/background/cardsekolah.png'; // Gambar untuk level "Sekolah"
-
+import '../App.css'
 export default function HalamanLevel() {
-    const handleLevelSelection = (level) => {
-        Swal.fire({
-            title: 'Level Dipilih!',
-            text: `Anda memilih level: ${level}`,
-            icon: 'success',
-            confirmButtonText: 'Ayo Mulai!',
-        });
-        // Tambahkan logika navigasi atau aksi lainnya di sini
-    };
+
+        const handleLevelSelection = (level) => {
+            const isRumah = level === 'Di Rumah'; // Cek apakah level yang dipilih adalah "Di Rumah"
+            Swal.fire({
+                title: `<span style="font-family: 'Comic Sans MS'">Hebat! Kamu Pilih Level ${level}!</span>`,
+                html: `
+                  <div style="font-family: 'Comic Sans MS'">
+                    <p style="font-size: 1.2em">Ayo belajar nama-nama benda di <b>${level}</b> 🧠✨</p>
+                    <p style="font-size: 1em; margin-top: 10px">Siap cari dan temukan bersama? 👀</p>
+                  </div>
+                `,
+                icon: 'success',
+                iconColor: isRumah ? '#ffcc00' : '#00ccff',
+                confirmButtonText: 'Ayo Mulai!',
+                cancelButtonText: 'Batal',
+                showCancelButton: true,
+                confirmButtonColor: isRumah ? '#ffcc00' : '#00ccff',
+                cancelButtonColor: '#d33',
+                showClass: {
+                  popup: 'animate__animated animate__bounceIn'
+                },
+                hideClass: {
+                  popup: 'animate__animated animate__bounceOut'
+                },
+                background: '#fff3e6',
+                customClass: {
+                  title: 'sweet-title',
+                  confirmButton: 'sweet-button',
+                  cancelButton: 'sweet-button-cancel'
+                }
+              }).then((result) => {
+                if (result.isConfirmed) {
+                  window.location.href = isRumah ? "/rumahmain" : "/sekolahmain";
+                }
+              });
+              
+        };
 
     return (
         <div
@@ -92,6 +120,7 @@ export default function HalamanLevel() {
                             fontFamily: "'Comic Sans MS', cursive, sans-serif",
                             boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)',
                         }}
+                        className='hover:scale-105 transition-transform'
                     >
                         Pilih Rumah
                     </button>
@@ -130,6 +159,7 @@ export default function HalamanLevel() {
                             fontFamily: "'Comic Sans MS', cursive, sans-serif",
                             boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)',
                         }}
+                        className='hover:scale-105 transition-transform'
                     >
                         Pilih Sekolah
                     </button>

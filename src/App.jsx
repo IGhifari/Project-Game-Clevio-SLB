@@ -5,6 +5,7 @@ import HalamanAwal from './components/halamanAwal';
 import HalamanLevel from './components/halamanLevel';
 import RumahMain from './components/rumahMain';
 import SekolahMain from './components/sekolahMain';
+import KamarMandiRumah from './components/kamarMandiRumah';
 function App() {
 
   return (
@@ -14,6 +15,7 @@ function App() {
         <Route path="/halamanlevel" element={<HalamanLevel />} />
         <Route path="/rumahmain" element={<RumahMain />} />
         <Route path="/sekolahmain" element={<SekolahMain />} />
+        <Route path="/kamarMandiRumah" element={<KamarMandiRumah />} />
         {/* Add more routes as needed */}
       </Routes>
     </BrowserRouter>

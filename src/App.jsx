@@ -6,6 +6,7 @@ import HalamanLevel from './components/halamanLevel';
 import RumahMain from './components/rumahMain';
 import SekolahMain from './components/sekolahMain';
 import KamarMandiRumah from './components/kamarMandiRumah';
+import Ruangtamu from './components/ruangtamu';
 function App() {
 
   return (
@@ -16,6 +17,7 @@ function App() {
         <Route path="/rumahmain" element={<RumahMain />} />
         <Route path="/sekolahmain" element={<SekolahMain />} />
         <Route path="/kamarMandiRumah" element={<KamarMandiRumah />} />
+        <Route path="/ruangtamu" element={<Ruangtamu />} />
         {/* Add more routes as needed */}
       </Routes>
     </BrowserRouter>

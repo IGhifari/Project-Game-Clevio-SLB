@@ -1,47 +1,44 @@
-import React from 'react';
-import Swal from 'sweetalert2'; // Import SweetAlert2
-import backgroundImage from '../assets/background/levelchoiche.png'; // Pastikan path ke gambar sesuai
-import rumahImage from '../assets/background/cardrumah.png'; // Gambar untuk level "Di Rumah"
-import sekolahImage from '../assets/background/cardsekolah.png'; // Gambar untuk level "Sekolah"
-import '../App.css'
-export default function HalamanLevel() {
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2';
+import backgroundImage from '../assets/background/levelchoiche.png';
+import rumahImage from '../assets/background/cardrumah.png';
+import sekolahImage from '../assets/background/cardsekolah.png';
+import lockIcon from '../assets/object/gembok.png';
 
-        const handleLevelSelection = (level) => {
-            const isRumah = level === 'Di Rumah'; // Cek apakah level yang dipilih adalah "Di Rumah"
+export default function HalamanLevel() {
+    const [isRumahCompleted, setIsRumahCompleted] = useState(false);
+    const navigate = useNavigate();
+
+    const handleLevelSelection = (level) => {
+        if (level === 'Di Rumah') {
             Swal.fire({
-                title: `<span style="font-family: 'Comic Sans MS'">Hebat! Kamu Pilih Level ${level}!</span>`,
-                html: `
-                  <div style="font-family: 'Comic Sans MS'">
-                    <p style="font-size: 1.2em">Ayo belajar nama-nama benda di <b>${level}</b> 🧠✨</p>
-                    <p style="font-size: 1em; margin-top: 10px">Siap cari dan temukan bersama? 👀</p>
-                  </div>
-                `,
+                title: 'Level Dipilih!',
+                text: `Anda memilih level: ${level}`,
                 icon: 'success',
-                iconColor: isRumah ? '#ffcc00' : '#00ccff',
                 confirmButtonText: 'Ayo Mulai!',
-                cancelButtonText: 'Batal',
-                showCancelButton: true,
-                confirmButtonColor: isRumah ? '#ffcc00' : '#00ccff',
-                cancelButtonColor: '#d33',
-                showClass: {
-                  popup: 'animate__animated animate__bounceIn'
-                },
-                hideClass: {
-                  popup: 'animate__animated animate__bounceOut'
-                },
-                background: '#fff3e6',
-                customClass: {
-                  title: 'sweet-title',
-                  confirmButton: 'sweet-button',
-                  cancelButton: 'sweet-button-cancel'
-                }
-              }).then((result) => {
-                if (result.isConfirmed) {
-                  window.location.href = isRumah ? "/rumahmain" : "/sekolahmain";
-                }
-              });
-              
-        };
+            }).then(() => {
+                setIsRumahCompleted(true); // Tandai level "Di Rumah" selesai
+                navigate('/rumah'); // Arahkan ke halaman Rumah
+            });
+        } else if (level === 'Sekolah' && isRumahCompleted) {
+            Swal.fire({
+                title: 'Level Dipilih!',
+                text: `Anda memilih level: ${level}`,
+                icon: 'success',
+                confirmButtonText: 'Ayo Mulai!',
+            }).then(() => {
+                navigate('/sekolah'); // Arahkan ke halaman Sekolah
+            });
+        } else {
+            Swal.fire({
+                title: 'Level Terkunci!',
+                text: 'Selesaikan level "Di Rumah" terlebih dahulu untuk membuka level ini.',
+                icon: 'warning',
+                confirmButtonText: 'OK',
+            });
+        }
+    };
 
     return (
         <div
@@ -56,10 +53,7 @@ export default function HalamanLevel() {
                 alignItems: 'center',
                 padding: '20px',
                 textAlign: 'center',
-                width: '100%', // Memenuhi lebar layar
-                overflow: 'hidden', // Menghindari scroll
-                position: 'relative', // Untuk mengatur posisi elemen di dalam
-                zIndex: 1, // Menempatkan elemen di atas background
+                width: '100%',
             }}
         >
             <h1
@@ -69,7 +63,6 @@ export default function HalamanLevel() {
                     textShadow: '2px 2px 4px rgba(0, 0, 0, 0.7)',
                     fontFamily: "'Comic Sans MS', cursive, sans-serif",
                     marginBottom: '20px',
-                    
                 }}
             >
                 Pilih Level
@@ -80,11 +73,9 @@ export default function HalamanLevel() {
                     gap: '400px',
                     justifyContent: 'center',
                     alignItems: 'center',
-                    width: '75%', // Memenuhi lebar layar
+                    width: '75%',
                     marginTop: '20px',
-                    flexWrap: 'wrap', // Membuat card fleksibel
-                  
-                    
+                    flexWrap: 'wrap',
                 }}
             >
                 {/* Card untuk level "Di Rumah" */}
@@ -95,8 +86,8 @@ export default function HalamanLevel() {
                         boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)',
                         padding: '20px',
                         textAlign: 'center',
-                        flex: 1, // Membuat card fleksibel
-                        maxWidth: '45%', // Membatasi ukuran maksimum
+                        flex: 1,
+                        maxWidth: '45%',
                     }}
                 >
                     <img
@@ -120,7 +111,6 @@ export default function HalamanLevel() {
                             fontFamily: "'Comic Sans MS', cursive, sans-serif",
                             boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)',
                         }}
-                        className='hover:scale-105 transition-transform'
                     >
                         Pilih Rumah
                     </button>
@@ -134,8 +124,9 @@ export default function HalamanLevel() {
                         boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)',
                         padding: '20px',
                         textAlign: 'center',
-                        flex: 1, // Membuat card fleksibel
-                        maxWidth: '45%', // Membatasi ukuran maksimum
+                        flex: 1,
+                        maxWidth: '45%',
+                        position: 'relative',
                     }}
                 >
                     <img
@@ -145,21 +136,37 @@ export default function HalamanLevel() {
                             width: '100%',
                             borderRadius: '10px',
                             marginBottom: '10px',
+                            filter: isRumahCompleted ? 'none' : 'grayscale(100%)',
                         }}
                     />
+                    {!isRumahCompleted && (
+                        <img
+                            src={lockIcon}
+                            alt="Terkunci"
+                            style={{
+                                position: 'absolute',
+                                top: '50%',
+                                left: '50%',
+                                transform: 'translate(-50%, -50%)',
+                                width: '600px',
+                                height: '200px',
+                                opacity: 0.8,
+                            }}
+                        />
+                    )}
                     <button
                         onClick={() => handleLevelSelection('Sekolah')}
                         style={{
-                            backgroundColor: '#00ccff',
+                            backgroundColor: isRumahCompleted ? '#00ccff' : '#ccc',
                             border: 'none',
                             borderRadius: '10px',
                             padding: '10px 20px',
                             fontSize: '16px',
-                            cursor: 'pointer',
+                            cursor: isRumahCompleted ? 'pointer' : 'not-allowed',
                             fontFamily: "'Comic Sans MS', cursive, sans-serif",
                             boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)',
                         }}
-                        className='hover:scale-105 transition-transform'
+                        disabled={!isRumahCompleted}
                     >
                         Pilih Sekolah
                     </button>

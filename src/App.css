@@ -1,5 +1,9 @@
 @import "tailwindcss";
+@import 'animate.css';
 
+.animate__animated {
+    --animate-duration: 0.5s;
+}
 /* Add these styles for SweetAlert customization */
 .sweet-title {
   font-size: 24px !important;

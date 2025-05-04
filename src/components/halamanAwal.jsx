@@ -25,7 +25,7 @@ export default function HalamanAwal() {
       />
 
       {/* Card tengah */}
-      <div className="bg-white/80 backdrop-blur-md rounded-2xl shadow-2xl px-8 py-10 sm:px-12 sm:py-12 flex flex-col items-center gap-8 max-w-xs sm:max-w-md transform transition-transform hover:scale-105 hover:shadow-2xl animate-fade-in">
+      <div className="bg-white/80 backdrop-blur-md  rounded-2xl shadow-2xl py-10 flex flex-col items-center gap-8 max-w-xs sm:max-w-md ">
         {/* Judul game */}
         <h1 className="text-4xl font-bold text-pink-600 text-center drop-shadow-md flex items-center gap-2">
           🌟 Benda Ditempatku 🎈
@@ -39,7 +39,7 @@ export default function HalamanAwal() {
         {/* Tombol Play */}
         <button
           onClick={handlePlayClick}
-          className="px-8 py-4 bg-pink-500 hover:bg-pink-600 text-white text-xl rounded-full shadow-md transition-all transform hover:scale-105 hover:shadow-xl active:scale-95"
+          className="px-8 py-4 bg-pink-500 cursor-pointer hover:bg-pink-600 text-white text-xl rounded-full shadow-md transition-all transform hover:scale-105 hover:shadow-xl active:scale-95"
         >
           Mulai Bermain
         </button>

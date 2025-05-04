@@ -19,7 +19,7 @@ export default function HalamanLevel() {
                 confirmButtonText: 'Ayo Mulai!',
             }).then(() => {
                 setIsRumahCompleted(true); // Tandai level "Di Rumah" selesai
-                navigate('/rumah'); // Arahkan ke halaman Rumah
+                navigate('/rumahmain'); // Arahkan ke halaman Rumah
             });
         } else if (level === 'Sekolah' && isRumahCompleted) {
             Swal.fire({
@@ -28,7 +28,7 @@ export default function HalamanLevel() {
                 icon: 'success',
                 confirmButtonText: 'Ayo Mulai!',
             }).then(() => {
-                navigate('/sekolah'); // Arahkan ke halaman Sekolah
+                navigate('/sekolahmain'); // Arahkan ke halaman Sekolah
             });
         } else {
             Swal.fire({

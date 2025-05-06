@@ -3,7 +3,7 @@
 
 
 
-export default function classStar () {
+export default function LapanganSekolah () {
     return(
         <div>
             

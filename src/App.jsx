@@ -7,7 +7,8 @@ import RumahMain from './components/rumahMain';
 import SekolahMain from './components/sekolahMain';
 import Ruangtamu from './components/ruangtamu';
 import KamarMandiRumah from './components/kamarMandiRumah';
-
+import PerpustakaanSekolah from './components/perpustakaanSekolah';
+import LapanganSekolah from './components/lapanganSekolah';
 
 function App() {
 
@@ -20,6 +21,8 @@ function App() {
         <Route path="/sekolahmain" element={<SekolahMain />} />
         <Route path="/ruangtamu" element={<Ruangtamu />} />
         <Route path="/kamarMandiRumah" element={<KamarMandiRumah />} />
+        <Route path="/perpustakaanSekolah" element={<PerpustakaanSekolah />} />
+        <Route path="/lapanganSekolah" element={<LapanganSekolah />} />
       </Routes>
     </BrowserRouter>
   )

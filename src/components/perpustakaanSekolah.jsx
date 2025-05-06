@@ -2,8 +2,7 @@
 
 
 
-
-export default function classStar () {
+export default function PerpustakaanSekolah () {
     return(
         <div>
             

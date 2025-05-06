@@ -4,10 +4,10 @@ import kamarMandiRumahBg from '../assets/background/kamarmandiRumah.png';
 import PastaGigi from '../assets/object/kamarMandiRumah/pastaGigi.png';
 import kesetKamarMandi from '../assets/object/kamarMandiRumah/kesetKamarMandi.png';
 import jendelaKamarMandi from '../assets/object/kamarMandiRumah/jendelaKamarMandi.png'
-import CardObjectKamar from './objectRumah/cardObjectKamar';
+import CardObjectKamarMandi from './objectRumah/cardObjectKamarMandi';
 import kamarStar from './pointStar/rumahStar/kamarStar';
 
-export default function KamarMandiRumah() {
+export default function KamarMandiRumah(data) {
     const [mission, setMission] = useState('');
     const [showObjectCard, setShowObjectCard] = useState(false);
     const [foundObjects, setFoundObjects] = useState([]);
@@ -86,9 +86,10 @@ export default function KamarMandiRumah() {
             </button>
 
             {showObjectCard && (
-                <CardObjectKamarMandi 
-                    data={objectData} 
+                <CardObjectKamarMandi
+                    data={objectData}
                     onClose={() => setShowObjectCard(false)}
+                   
                 />
             )}
         </div>

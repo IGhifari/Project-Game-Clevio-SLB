@@ -5,11 +5,14 @@ import foto from '../assets/object/rumah/foto.png';
 import meja from '../assets/object/rumah/meja.png';
 import vas from '../assets/object/rumah/vas.png';
 import CardObjectruangtamu from './objectRumah/cardObjectKamar';
+import RuangTamuStar from './pointStar/rumahStar/ruangTamuStar';
 
+import WaktuMain from './waktu/waktuMain';
 export default function RumahMain() {
     const [mission, setMission] = useState('');
     const [showObjectCard, setShowObjectCard] = useState(false);
-
+    const [foundObjects, setFoundObjects] = useState([]);
+    const [timeLeft, setTimeLeft] = useState(30);
     // Data benda kamar
     const objectData = [
         { name: 'foto', image: foto },
@@ -53,6 +56,8 @@ export default function RumahMain() {
             }}
         >
             
+            <WaktuMain timeLeft={timeLeft} totalTime={30} />
+            <RuangTamuStar foundObjects={foundObjects} />
             <img 
                 src={foto}
                 alt="foto"
@@ -99,9 +104,9 @@ export default function RumahMain() {
                 alt="Bantal"
                 className="absolute cursor-pointer   transition-transform"
                 style={{
-                    top: '62%',    // Adjust these values to position the pillow
-                    left: '87.5%',   // where you want it on the background
-                    width: '200px', // Adjust size as needed
+                    top: '65%',    // Adjust these values to position the pillow
+                    left: '85%',   // where you want it on the background
+                    width: '170px', // Adjust size as needed
                     height: 'auto'  
                 }}
                 onClick={() => {

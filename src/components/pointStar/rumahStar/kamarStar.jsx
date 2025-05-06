@@ -1,7 +1,7 @@
 import React from 'react';
 import starIcon from '../../../assets/object/star.png'; // Make sure to add a star image
 
-export default function kamarStar({ foundObjects }) {
+export default function KamarStar({ foundObjects }) {
     const totalStars = 3; // Total possible stars (3 objects to find)
     const earnedStars = foundObjects.length; // Number of found objects
 

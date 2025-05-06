@@ -5,17 +5,18 @@ import PastaGigi from '../assets/object/kamarMandiRumah/pastaGigi.png';
 import kesetKamarMandi from '../assets/object/kamarMandiRumah/kesetKamarMandi.png';
 import jendelaKamarMandi from '../assets/object/kamarMandiRumah/jendelaKamarMandi.png'
 import CardObjectKamarMandi from './objectRumah/cardObjectKamarMandi';
-import kamarStar from './pointStar/rumahStar/kamarStar';
+import KamarStar from './pointStar/rumahStar/kamarStar';
+import WaktuMain from './waktu/waktuMain'; 
 
 export default function KamarMandiRumah(data) {
     const [mission, setMission] = useState('');
     const [showObjectCard, setShowObjectCard] = useState(false);
     const [foundObjects, setFoundObjects] = useState([]);
-
+    const [timeLeft, setTimeLeft] = useState(30); 
     const objectData = [
-        { name: '🪥 Pasta Gigi', image: PastaGigi },
-        { name: '🧼 Keset Kamar Mandi', image: kesetKamarMandi },
-        { name: '🧴 Jendela Kamar Mandi', image: jendelaKamarMandi},
+        { name: '🪥 Sikat Gigi', image: PastaGigi },
+        { name: '🧼 Keset', image: kesetKamarMandi },
+        { name: '🧴 Jendela', image: jendelaKamarMandi},
     ];
 
     const handleObjectFound = (objectName) => {
@@ -75,12 +76,14 @@ export default function KamarMandiRumah(data) {
                  imageRendering: 'pixelated'
              }}>
             
-            <kamarStar foundObjects={foundObjects} />
+            <WaktuMain timeLeft={timeLeft} totalTime={30} /> 
 
+            <KamarStar foundObjects={foundObjects} />
+             
             {/* Button to show object card */}
             <button
                 onClick={() => setShowObjectCard(true)}
-                className="fixed bottom-4 right-4 bg-blue-500 text-white px-4 py-2 rounded-full shadow-lg hover:bg-blue-600 transition-colors"
+                className="fixed bottom-4 cursor-pointer right-4 bg-blue-500 text-white px-4 py-2 rounded-full shadow-lg hover:bg-blue-600 transition-colors"
             >
                 📖 Lihat Benda
             </button>

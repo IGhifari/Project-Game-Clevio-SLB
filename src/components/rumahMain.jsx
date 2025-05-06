@@ -6,6 +6,7 @@ import lampuTidur from '../assets/object/rumah/lampuRumah.png';
 import bonekaBebek from '../assets/object/rumah/bonekaBebekRumah.png';
 import CardObjectKamar from './objectRumah/cardObjectKamar';
 import RumahStar from './pointStar/rumahStar/rumahStar';
+import WaktuMain from './waktu/waktuMain';
 
 export default function RumahMain() {
     const [mission, setMission] = useState('');
@@ -123,19 +124,13 @@ export default function RumahMain() {
                 imageRendering: 'pixelated'
             }}
         >
-            {/* Add RumahStar component */}
-            <RumahStar foundObjects={foundObjects} />
+            {/* Replace old timer with WaktuMain component */}
+           {/* Timer di tengah atas */}
+            <WaktuMain timeLeft={timeLeft} totalTime={30} />
 
-            {/* Bar Waktu */}
-            <div className="absolute top-4 left-4 w-3/4 bg-gray-300 rounded-full h-4 overflow-hidden">
-                <div
-                    className="bg-red-500 h-full transition-all"
-                    style={{ width: `${(timeLeft / 30) * 100}%` }}
-                ></div>
-            </div>
-            <p className="absolute top-2 left-4 text-white font-bold">
-                Sisa Waktu: {timeLeft > 0 ? timeLeft : 0} detik
-            </p>
+
+            {/* RumahStar component */}
+            <RumahStar foundObjects={foundObjects} />
 
             {/* Bantal */}
             <img

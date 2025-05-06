@@ -11,6 +11,8 @@ export default function RumahMain() {
     const [mission, setMission] = useState('');
     const [showObjectCard, setShowObjectCard] = useState(false);
     const [foundObjects, setFoundObjects] = useState([]);
+    const [timeLeft, setTimeLeft] = useState(30); // Waktu dalam detik
+    const [isGameOver, setIsGameOver] = useState(false);
 
     const objectData = [
         { name: '🟡 Bantal', image: bantalRumah },
@@ -20,8 +22,9 @@ export default function RumahMain() {
 
     const handleObjectFound = (objectName) => {
         if (!foundObjects.includes(objectName)) {
-            setFoundObjects([...foundObjects, objectName]);
-            
+            const updatedFoundObjects = [...foundObjects, objectName];
+            setFoundObjects(updatedFoundObjects);
+
             Swal.fire({
                 title: '🎉 Hebat!',
                 html: `<p style="font-size: 18px;">Kamu menemukan <strong>${objectName}!</strong></p>`,
@@ -30,17 +33,10 @@ export default function RumahMain() {
                 confirmButtonColor: '#4CAF50'
             });
 
-            // Check if all objects are found
-            if (foundObjects.length === 2) { // When finding the last object
-                setTimeout(() => {
-                    Swal.fire({
-                        title: '🌟 Selamat! 🌟',
-                        html: '<p style="font-size: 18px;">Kamu berhasil menemukan semua benda!</p>',
-                        icon: 'success',
-                        confirmButtonText: '🎉 Yeay!',
-                        confirmButtonColor: '#4CAF50'
-                    });
-                }, 1000);
+            // Jika semua objek ditemukan (3 bintang), hentikan waktu dan tampilkan kartu kemenangan
+            if (updatedFoundObjects.length === 3) {
+                setTimeLeft(-1); // Hentikan waktu dengan nilai khusus
+                showVictoryCard(3); // Tampilkan kartu kemenangan dengan 3 bintang
             }
         }
     };
@@ -73,6 +69,52 @@ export default function RumahMain() {
         });
     }, []);
 
+    // Sistem waktu
+    useEffect(() => {
+        if (timeLeft > 0) {
+            const timer = setInterval(() => {
+                setTimeLeft((prevTime) => prevTime - 1);
+            }, 1000);
+            return () => clearInterval(timer);
+        } else if (timeLeft === 0 && !isGameOver) {
+            setIsGameOver(true);
+            showVictoryCard(foundObjects.length); // Tampilkan kartu berdasarkan jumlah bintang
+        }
+    }, [timeLeft, isGameOver]);
+
+    const showVictoryCard = (starsEarned) => {
+        let title = starsEarned === 0 ? '⏰ Game Over!' : '🎉 Victory!';
+        let message =
+            starsEarned === 0
+                ? '<p style="font-size: 18px;">Sayang sekali, kamu tidak mendapatkan bintang.</p>'
+                : `<p style="font-size: 18px;">Kamu mendapatkan ${starsEarned} bintang!</p>`;
+        let starIcons = '⭐'.repeat(starsEarned);
+
+        Swal.fire({
+            title: title,
+            html: `
+                <div style="font-family: Comic Sans MS; font-size: 18px;">
+                    ${message}
+                    <p>${starIcons}</p>
+                </div>
+            `,
+            icon: starsEarned === 0 ? 'error' : 'success',
+            showCancelButton: starsEarned > 0, // Tombol ulang hanya muncul jika bintang > 0
+            confirmButtonText: starsEarned === 0 ? '🔄 Ulang Stage' : '➡️ Lanjut Stage',
+            cancelButtonText: '🔄 Ulang Stage',
+            confirmButtonColor: '#4CAF50',
+            cancelButtonColor: '#FF5722',
+        }).then((result) => {
+            if (result.isConfirmed && starsEarned > 0) {
+                // Logika untuk melanjutkan ke stage berikutnya
+                window.location.href = '/kamarMandiRumah'; // Ganti dengan URL stage berikutnya
+            } else {
+                // Logika untuk mengulang stage ini
+                window.location.reload();
+            }
+        });
+    };
+
     return (
         <div
             className="min-h-screen w-full bg-cover bg-center bg-no-repeat relative"
@@ -83,6 +125,17 @@ export default function RumahMain() {
         >
             {/* Add RumahStar component */}
             <RumahStar foundObjects={foundObjects} />
+
+            {/* Bar Waktu */}
+            <div className="absolute top-4 left-4 w-3/4 bg-gray-300 rounded-full h-4 overflow-hidden">
+                <div
+                    className="bg-red-500 h-full transition-all"
+                    style={{ width: `${(timeLeft / 30) * 100}%` }}
+                ></div>
+            </div>
+            <p className="absolute top-2 left-4 text-white font-bold">
+                Sisa Waktu: {timeLeft > 0 ? timeLeft : 0} detik
+            </p>
 
             {/* Bantal */}
             <img

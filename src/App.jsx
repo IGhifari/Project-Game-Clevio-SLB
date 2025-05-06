@@ -7,6 +7,8 @@ import RumahMain from './components/rumahMain';
 import SekolahMain from './components/sekolahMain';
 import Ruangtamu from './components/ruangtamu';
 import KamarMandiRumah from './components/kamarMandiRumah';
+
+
 function App() {
 
   return (

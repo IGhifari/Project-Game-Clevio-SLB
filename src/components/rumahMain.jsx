@@ -12,8 +12,8 @@ export default function RumahMain() {
     const [mission, setMission] = useState('');
     const [showObjectCard, setShowObjectCard] = useState(false);
     const [foundObjects, setFoundObjects] = useState([]);
-    const [timeLeft, setTimeLeft] = useState(30); // Timer awal, tapi tidak dimulai dulu
-    const [isTimerStarted, setIsTimerStarted] = useState(false); // Untuk kontrol mulai waktu
+    const [timeLeft, setTimeLeft] = useState(30);
+    const [isTimerStarted, setIsTimerStarted] = useState(false);
     const [isGameOver, setIsGameOver] = useState(false);
 
     const objectData = [
@@ -36,7 +36,9 @@ export default function RumahMain() {
             });
 
             if (updatedFoundObjects.length === 3) {
-                setTimeLeft(-1); // hentikan waktu
+                setTimeLeft(-1);
+                // Simpan progres ke localStorage
+                localStorage.setItem('rumahmain_completed', 'true');
                 showVictoryCard(3);
             }
         }
@@ -66,13 +68,12 @@ export default function RumahMain() {
         }).then((result) => {
             if (result.isConfirmed) {
                 setMission('Temukan benda-benda di kamar');
-                setIsTimerStarted(true); // Mulai waktu
-                setTimeLeft(30); // Reset waktu ke 30 detik
+                setIsTimerStarted(true);
+                setTimeLeft(30);
             }
         });
     }, []);
 
-    // Timer countdown
     useEffect(() => {
         if (isTimerStarted && timeLeft > 0) {
             const timer = setInterval(() => {
@@ -86,32 +87,25 @@ export default function RumahMain() {
     }, [isTimerStarted, timeLeft, isGameOver]);
 
     const showVictoryCard = (starsEarned) => {
-        let title = starsEarned === 0 ? '⏰ Game Over!' : '🎉 Victory!';
-        let message =
-            starsEarned === 0
-                ? '<p style="font-size: 18px;">Sayang sekali, kamu tidak mendapatkan bintang.</p>'
-                : `<p style="font-size: 18px;">Kamu mendapatkan ${starsEarned} bintang!</p>`;
-        let starIcons = '⭐'.repeat(starsEarned);
+        // Save stars for this stage
+        localStorage.setItem('rumahmain_stars', starsEarned);
+        localStorage.setItem('rumahmain_completed', 'true');
 
         Swal.fire({
-            title: title,
+            title: '🎉 Level Selesai!',
             html: `
                 <div style="font-family: Comic Sans MS; font-size: 18px;">
-                    ${message}
-                    <p>${starIcons}</p>
+                    <p>Kamu mendapatkan ${starsEarned} bintang!</p>
+                    <p>${'⭐'.repeat(starsEarned)}</p>
+                    <p class="mt-4">Ayo lanjut ke Kamar Mandi!</p>
                 </div>
             `,
-            icon: starsEarned === 0 ? 'error' : 'success',
-            showCancelButton: starsEarned > 0,
-            confirmButtonText: starsEarned === 0 ? '🔄 Ulang Stage' : '➡️ Lanjut Stage',
-            cancelButtonText: '🔄 Ulang Stage',
-            confirmButtonColor: '#4CAF50',
-            cancelButtonColor: '#FF5722',
+            icon: 'success',
+            confirmButtonText: '➡️ Lanjut ke Kamar Mandi',
+            confirmButtonColor: '#4CAF50'
         }).then((result) => {
-            if (result.isConfirmed && starsEarned > 0) {
-                window.location.href = '/kamarMandiRumah'; // Ganti sesuai stage selanjutnya
-            } else {
-                window.location.reload();
+            if (result.isConfirmed) {
+                window.location.href = '/kamarMandiRumah';
             }
         });
     };
@@ -124,48 +118,24 @@ export default function RumahMain() {
                 imageRendering: 'pixelated'
             }}
         >
-            {/* Timer */}
             <WaktuMain timeLeft={timeLeft} totalTime={30} />
-
-            {/* Bintang */}
             <RumahStar foundObjects={foundObjects} />
 
-            {/* Bantal */}
-            <img
-                src={bantalRumah}
-                alt="Bantal"
-                className="absolute cursor-pointer transition-transform hover:scale-105"
-                style={{ top: '71%', left: '72.5%', width: '310px', height: 'auto' }}
-                onClick={() => handleObjectFound('🟡 Bantal')}
-            />
+            <img src={bantalRumah} alt="Bantal" className="absolute cursor-pointer hover:scale-105"
+                style={{ top: '71%', left: '72.5%', width: '310px' }}
+                onClick={() => handleObjectFound('🟡 Bantal')} />
+            <img src={lampuTidur} alt="Lampu Tidur" className="absolute cursor-pointer hover:scale-105"
+                style={{ top: '34.5%', left: '85%', width: '160px' }}
+                onClick={() => handleObjectFound('💡 Lampu Tidur')} />
+            <img src={bonekaBebek} alt="Boneka Bebek" className="absolute cursor-pointer hover:scale-105"
+                style={{ top: '10.3%', left: '46.6%', width: '85px' }}
+                onClick={() => handleObjectFound('🧸 Boneka Bebek')} />
 
-            {/* Lampu Tidur */}
-            <img
-                src={lampuTidur}
-                alt="Lampu Tidur"
-                className="absolute cursor-pointer transition-transform hover:scale-105"
-                style={{ top: '34.5%', left: '85%', width: '160px', height: 'auto' }}
-                onClick={() => handleObjectFound('💡 Lampu Tidur')}
-            />
-
-            {/* Boneka Bebek */}
-            <img
-                src={bonekaBebek}
-                alt="Boneka Bebek"
-                className="absolute cursor-pointer transition-transform hover:scale-105"
-                style={{ top: '10.3%', left: '46.6%', width: '85px', height: 'auto' }}
-                onClick={() => handleObjectFound('🧸 Boneka Bebek')}
-            />
-
-            {/* Tombol lihat benda */}
-            <button
-                onClick={() => setShowObjectCard(true)}
-                className="fixed bottom-4 right-4 bg-blue-500 text-white px-4 py-2 rounded-full cursor-pointer shadow-lg hover:bg-blue-600 transition-colors"
-            >
+            <button onClick={() => setShowObjectCard(true)}
+                className="fixed bottom-4 right-4 bg-blue-500 text-white px-4 py-2 rounded-full shadow-lg hover:bg-blue-600">
                 📖 Lihat Benda yang Dicari
             </button>
 
-            {/* Kartu daftar benda */}
             {showObjectCard && (
                 <CardObjectKamar
                     data={objectData}

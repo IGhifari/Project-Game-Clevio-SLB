@@ -82,19 +82,31 @@ export default function RuangTamuMain() {
     };
 
     const showVictoryCard = (starsEarned) => {
+        // Save stars for this stage
+        localStorage.setItem('ruangtamu_stars', starsEarned);
+        localStorage.setItem('ruangtamu_completed', 'true');
+
+        const totalStars = 
+            parseInt(localStorage.getItem('rumahmain_stars') || 0) +
+            parseInt(localStorage.getItem('kamarmandi_stars') || 0) +
+            starsEarned;
+
         Swal.fire({
-            title: '🎉 Selesai!',
+            title: '🎉 Semua Level Selesai!',
             html: `
                 <div style="font-family: Comic Sans MS; font-size: 18px;">
-                    <p>Kamu mendapatkan ${starsEarned} bintang! ${'⭐'.repeat(starsEarned)}</p>
+                    <p>Kamu mendapatkan ${starsEarned} bintang di level ini!</p>
+                    <p>${'⭐'.repeat(starsEarned)}</p>
+                    <p class="mt-4">Total bintang: ${totalStars} ⭐</p>
                 </div>
             `,
             icon: 'success',
-            confirmButtonText: '➡️ Lanjut ke Reward',
+            confirmButtonText: '🏆 Lihat Reward',
             confirmButtonColor: '#4CAF50'
-        }).then(() => {
-            // Arahkan ke halaman reward
-            window.location.href = '/reward';
+        }).then((result) => {
+            if (result.isConfirmed) {
+                window.location.href = '/reward';
+            }
         });
     };
 

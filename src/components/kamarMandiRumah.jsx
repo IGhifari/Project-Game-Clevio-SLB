@@ -80,34 +80,25 @@ export default function KamarMandiRumah() {
     }, [timeLeft, isGameOver]);
 
     const showVictoryCard = (starsEarned) => {
-        let title = starsEarned === 0 ? '⏰ Game Over!' : '🎉 Victory!';
-        let message =
-            starsEarned === 0
-                ? '<p style="font-size: 18px;">Sayang sekali, kamu tidak mendapatkan bintang.</p>'
-                : `<p style="font-size: 18px;">Kamu mendapatkan ${starsEarned} bintang!</p>`;
-        let starIcons = '⭐'.repeat(starsEarned);
+        // Save stars for this stage
+        localStorage.setItem('kamarmandi_stars', starsEarned);
+        localStorage.setItem('kamarmandi_completed', 'true');
 
         Swal.fire({
-            title: title,
+            title: '🎉 Level Selesai!',
             html: `
                 <div style="font-family: Comic Sans MS; font-size: 18px;">
-                    ${message}
-                    <p>${starIcons}</p>
+                    <p>Kamu mendapatkan ${starsEarned} bintang!</p>
+                    <p>${'⭐'.repeat(starsEarned)}</p>
+                    <p class="mt-4">Ayo lanjut ke Ruang Tamu!</p>
                 </div>
             `,
-            icon: starsEarned === 0 ? 'error' : 'success',
-            showCancelButton: starsEarned > 0, // Tombol ulang hanya muncul jika bintang > 0
-            confirmButtonText: starsEarned === 0 ? '🔄 Ulang Stage' : '➡️ Lanjut Stage',
-            cancelButtonText: '🔄 Ulang Stage',
-            confirmButtonColor: '#4CAF50',
-            cancelButtonColor: '#FF5722',
+            icon: 'success',
+            confirmButtonText: '➡️ Lanjut ke Ruang Tamu',
+            confirmButtonColor: '#4CAF50'
         }).then((result) => {
-            if (result.isConfirmed && starsEarned > 0) {
-                // Logika untuk melanjutkan ke stage berikutnya
-                window.location.href = '/ruangtamu'; // Ganti dengan URL stage berikutnya
-            } else {
-                // Logika untuk mengulang stage ini
-                window.location.reload();
+            if (result.isConfirmed) {
+                window.location.href = '/ruangtamu';
             }
         });
     };

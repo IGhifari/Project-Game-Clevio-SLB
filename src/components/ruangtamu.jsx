@@ -6,46 +6,97 @@ import meja from '../assets/object/rumah/meja.png';
 import vas from '../assets/object/rumah/vas.png';
 import CardObjectruangtamu from './objectRumah/cardObjectKamar';
 import RuangTamuStar from './pointStar/rumahStar/ruangTamuStar';
-
 import WaktuMain from './waktu/waktuMain';
-export default function RumahMain() {
+
+export default function RuangTamuMain() {
     const [mission, setMission] = useState('');
     const [showObjectCard, setShowObjectCard] = useState(false);
     const [foundObjects, setFoundObjects] = useState([]);
-    const [timeLeft, setTimeLeft] = useState(30);
-    // Data benda kamar
+    const [timeLeft, setTimeLeft] = useState(null); // Timer belum jalan
+    const [isGameOver, setIsGameOver] = useState(false);
+
     const objectData = [
-        { name: 'foto', image: foto },
-        { name: 'meja', image: meja },
-        { name: 'vas', image: vas },
+        { name: '🖼️ Foto', image: foto },
+        { name: '🪑 Meja', image: meja },
+        { name: '🌸 Vas', image: vas },
     ];
 
+    // Tampilkan misi saat pertama kali masuk
     useEffect(() => {
         Swal.fire({
-            title: '<span style="font-family: Comic Sans MS">Misi Kamu Hari Ini!</span>',
+            title: '<span style="font-family: Comic Sans MS">📜 Misi Kamu Hari Ini!</span>',
             html: `
                 <div style="font-family: Comic Sans MS">
-                    <p class="text-lg">Temukan benda-benda di kamarmu:</p>
+                    <p class="text-lg">Temukan benda-benda di ruang tamu:</p>
                     <ul class="text-left mt-4 space-y-2">
-                        <li>1. Cari bantal berwarna kuning ${foto}</li>
-                        <li>2. Temukan buku di rak buku</li>
-                        <li>3. Cari mainan di lemari</li>
+                        <li>🖼️ Cari foto</li>
+                        <li>🪑 Temukan meja</li>
+                        <li>🌸 Cari vas bunga</li>
                     </ul>
                 </div>
             `,
             icon: 'info',
-            confirmButtonText: 'Siap, Aku Mengerti!',
+            confirmButtonText: '✅ Siap!',
             confirmButtonColor: '#4CAF50',
             background: '#FFF9C4',
-            showClass: {
-                popup: 'animate__animated animate__bounceIn'
-            }
         }).then((result) => {
             if (result.isConfirmed) {
-                setMission('Temukan benda-benda di kamar');
+                setMission('Temukan benda di ruang tamu');
+                setTimeLeft(30); // Waktu mulai setelah user klik Siap
             }
         });
     }, []);
+
+    useEffect(() => {
+        if (timeLeft > 0) {
+            const timer = setInterval(() => {
+                setTimeLeft((prev) => prev - 1);
+            }, 1000);
+            return () => clearInterval(timer);
+        } else if (timeLeft === 0 && !isGameOver) {
+            setIsGameOver(true);
+            showVictoryCard(foundObjects.length);
+        }
+    }, [timeLeft, isGameOver]);
+
+    const handleObjectFound = (objectName) => {
+        if (!foundObjects.includes(objectName)) {
+            const updated = [...foundObjects, objectName];
+            setFoundObjects(updated);
+
+            Swal.fire({
+                title: '🎉 Hebat!',
+                html: `<p style="font-size: 18px;">Kamu menemukan <strong>${objectName}</strong>!</p>`,
+                icon: 'success',
+                confirmButtonText: '👍 Oke!',
+                confirmButtonColor: '#4CAF50'
+            });
+
+            if (updated.length === 3) {
+                setTimeLeft(-1);
+                // Simpan ke localStorage
+                localStorage.setItem('ruangTamuStars', 3);
+                showVictoryCard(3);
+            }
+        }
+    };
+
+    const showVictoryCard = (starsEarned) => {
+        Swal.fire({
+            title: '🎉 Selesai!',
+            html: `
+                <div style="font-family: Comic Sans MS; font-size: 18px;">
+                    <p>Kamu mendapatkan ${starsEarned} bintang! ${'⭐'.repeat(starsEarned)}</p>
+                </div>
+            `,
+            icon: 'success',
+            confirmButtonText: '➡️ Lanjut ke Reward',
+            confirmButtonColor: '#4CAF50'
+        }).then(() => {
+            // Arahkan ke halaman reward
+            window.location.href = '/reward';
+        });
+    };
 
     return (
         <div 
@@ -55,82 +106,47 @@ export default function RumahMain() {
                 imageRendering: 'pixelated'
             }}
         >
-            
-            <WaktuMain timeLeft={timeLeft} totalTime={30} />
+            {timeLeft !== null && (
+                <WaktuMain timeLeft={timeLeft} totalTime={30} />
+            )}
+
             <RuangTamuStar foundObjects={foundObjects} />
+
+            {/* FOTO */}
             <img 
                 src={foto}
                 alt="foto"
-                className="absolute cursor-pointer   transition-transform"
-                style={{
-                    top: '22%',    // Adjust these values to position the pillow
-                    left: '6.1%',   // where you want it on the background
-                    width: '130px', // Adjust size as needed
-                    height: 'auto'  
-                }}
-                onClick={() => {
-                    Swal.fire({
-                        title: 'Hebat!',
-                        text: 'Kamu menemukan foto!',
-                        icon: 'success',
-                        confirmButtonText: 'Oke!',
-                        confirmButtonColor: '#4CAF50'
-                    });
-                }}
+                className="absolute cursor-pointer transition-transform hover:scale-105"
+                style={{ top: '22%', left: '6.1%', width: '130px' }}
+                onClick={() => handleObjectFound('🖼️ Foto')}
             />
 
+            {/* MEJA */}
             <img 
                 src={meja}
                 alt="meja"
-                className="absolute cursor-pointer   transition-transform"
-                style={{
-                    top: '79%',    // Adjust these values to position the pillow
-                    left: '40.7%',   // where you want it on the background
-                    width: '300px', // Adjust size as needed
-                    height: 'auto'  
-                }}
-                onClick={() => {
-                    Swal.fire({
-                        title: 'Hebat!',
-                        text: 'Kamu menemukan Meja!',
-                        icon: 'success',
-                        confirmButtonText: 'Oke!',
-                        confirmButtonColor: '#4CAF50'
-                    });
-                }}
+                className="absolute cursor-pointer transition-transform hover:scale-105"
+                style={{ top: '79%', left: '40.7%', width: '300px' }}
+                onClick={() => handleObjectFound('🪑 Meja')}
             />
+
+            {/* VAS */}
             <img 
                 src={vas}
-                alt="Bantal"
-                className="absolute cursor-pointer   transition-transform"
-                style={{
-                    top: '65%',    // Adjust these values to position the pillow
-                    left: '85%',   // where you want it on the background
-                    width: '170px', // Adjust size as needed
-                    height: 'auto'  
-                }}
-                onClick={() => {
-                    Swal.fire({
-                        title: 'Hebat!',
-                        text: 'Kamu menemukan Vas!',
-                        icon: 'success',
-                        confirmButtonText: 'Oke!',
-                        confirmButtonColor: '#4CAF50'
-                    });
-                }}
+                alt="Vas"
+                className="absolute cursor-pointer transition-transform hover:scale-105"
+                style={{ top: '63.5%', left: '87.9%', width: '186px' }}
+                onClick={() => handleObjectFound('🌸 Vas')}
             />
 
-            
-
-            {/* Button to show object card */}
+            {/* TOMBOL LIHAT */}
             <button
                 onClick={() => setShowObjectCard(true)}
                 className="fixed bottom-4 right-4 bg-blue-500 text-white px-4 py-2 rounded-full shadow-lg hover:bg-blue-600 transition-colors"
             > 
-                📖 Lihat Benda yang dicari
-            </button>
+                📖 Lihat Benda yang Dicari
+            </button> 
 
-            {/* Render CardObjectKamar when showObjectCard is true */}
             {showObjectCard && (
                 <CardObjectruangtamu 
                     data={objectData} 

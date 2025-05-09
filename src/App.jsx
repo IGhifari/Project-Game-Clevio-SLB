@@ -9,7 +9,7 @@ import Ruangtamu from './components/ruangtamu';
 import KamarMandiRumah from './components/kamarMandiRumah';
 import PerpustakaanSekolah from './components/perpustakaanSekolah';
 import LapanganSekolah from './components/lapanganSekolah';
-
+import Reward from './components/reward/rewardRumah';
 function App() {
 
   return (
@@ -23,6 +23,7 @@ function App() {
         <Route path="/kamarMandiRumah" element={<KamarMandiRumah />} />
         <Route path="/perpustakaanSekolah" element={<PerpustakaanSekolah />} />
         <Route path="/lapanganSekolah" element={<LapanganSekolah />} />
+        <Route path="/reward" element={<Reward />} />
       </Routes>
     </BrowserRouter>
   )

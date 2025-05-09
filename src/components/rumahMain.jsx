@@ -12,7 +12,8 @@ export default function RumahMain() {
     const [mission, setMission] = useState('');
     const [showObjectCard, setShowObjectCard] = useState(false);
     const [foundObjects, setFoundObjects] = useState([]);
-    const [timeLeft, setTimeLeft] = useState(30); // Waktu dalam detik
+    const [timeLeft, setTimeLeft] = useState(30); // Timer awal, tapi tidak dimulai dulu
+    const [isTimerStarted, setIsTimerStarted] = useState(false); // Untuk kontrol mulai waktu
     const [isGameOver, setIsGameOver] = useState(false);
 
     const objectData = [
@@ -34,10 +35,9 @@ export default function RumahMain() {
                 confirmButtonColor: '#4CAF50'
             });
 
-            // Jika semua objek ditemukan (3 bintang), hentikan waktu dan tampilkan kartu kemenangan
             if (updatedFoundObjects.length === 3) {
-                setTimeLeft(-1); // Hentikan waktu dengan nilai khusus
-                showVictoryCard(3); // Tampilkan kartu kemenangan dengan 3 bintang
+                setTimeLeft(-1); // hentikan waktu
+                showVictoryCard(3);
             }
         }
     };
@@ -66,22 +66,24 @@ export default function RumahMain() {
         }).then((result) => {
             if (result.isConfirmed) {
                 setMission('Temukan benda-benda di kamar');
+                setIsTimerStarted(true); // Mulai waktu
+                setTimeLeft(30); // Reset waktu ke 30 detik
             }
         });
     }, []);
 
-    // Sistem waktu
+    // Timer countdown
     useEffect(() => {
-        if (timeLeft > 0) {
+        if (isTimerStarted && timeLeft > 0) {
             const timer = setInterval(() => {
                 setTimeLeft((prevTime) => prevTime - 1);
             }, 1000);
             return () => clearInterval(timer);
         } else if (timeLeft === 0 && !isGameOver) {
             setIsGameOver(true);
-            showVictoryCard(foundObjects.length); // Tampilkan kartu berdasarkan jumlah bintang
+            showVictoryCard(foundObjects.length);
         }
-    }, [timeLeft, isGameOver]);
+    }, [isTimerStarted, timeLeft, isGameOver]);
 
     const showVictoryCard = (starsEarned) => {
         let title = starsEarned === 0 ? '⏰ Game Over!' : '🎉 Victory!';
@@ -100,17 +102,15 @@ export default function RumahMain() {
                 </div>
             `,
             icon: starsEarned === 0 ? 'error' : 'success',
-            showCancelButton: starsEarned > 0, // Tombol ulang hanya muncul jika bintang > 0
+            showCancelButton: starsEarned > 0,
             confirmButtonText: starsEarned === 0 ? '🔄 Ulang Stage' : '➡️ Lanjut Stage',
             cancelButtonText: '🔄 Ulang Stage',
             confirmButtonColor: '#4CAF50',
             cancelButtonColor: '#FF5722',
         }).then((result) => {
             if (result.isConfirmed && starsEarned > 0) {
-                // Logika untuk melanjutkan ke stage berikutnya
-                window.location.href = '/kamarMandiRumah'; // Ganti dengan URL stage berikutnya
+                window.location.href = '/kamarMandiRumah'; // Ganti sesuai stage selanjutnya
             } else {
-                // Logika untuk mengulang stage ini
                 window.location.reload();
             }
         });
@@ -124,12 +124,10 @@ export default function RumahMain() {
                 imageRendering: 'pixelated'
             }}
         >
-            {/* Replace old timer with WaktuMain component */}
-           {/* Timer di tengah atas */}
+            {/* Timer */}
             <WaktuMain timeLeft={timeLeft} totalTime={30} />
 
-
-            {/* RumahStar component */}
+            {/* Bintang */}
             <RumahStar foundObjects={foundObjects} />
 
             {/* Bantal */}
@@ -137,12 +135,7 @@ export default function RumahMain() {
                 src={bantalRumah}
                 alt="Bantal"
                 className="absolute cursor-pointer transition-transform hover:scale-105"
-                style={{
-                    top: '72%',
-                    left: '72.5%',
-                    width: '310px',
-                    height: 'auto'
-                }}
+                style={{ top: '71%', left: '72.5%', width: '310px', height: 'auto' }}
                 onClick={() => handleObjectFound('🟡 Bantal')}
             />
 
@@ -151,12 +144,7 @@ export default function RumahMain() {
                 src={lampuTidur}
                 alt="Lampu Tidur"
                 className="absolute cursor-pointer transition-transform hover:scale-105"
-                style={{
-                    top: '33.2%',
-                    left: '85%',
-                    width: '157px',
-                    height: 'auto'
-                }}
+                style={{ top: '34.5%', left: '85%', width: '160px', height: 'auto' }}
                 onClick={() => handleObjectFound('💡 Lampu Tidur')}
             />
 
@@ -165,12 +153,7 @@ export default function RumahMain() {
                 src={bonekaBebek}
                 alt="Boneka Bebek"
                 className="absolute cursor-pointer transition-transform hover:scale-105"
-                style={{
-                    top: '7.1%',
-                    left: '46.6%',
-                    width: '85px',
-                    height: 'auto'
-                }}
+                style={{ top: '10.3%', left: '46.6%', width: '85px', height: 'auto' }}
                 onClick={() => handleObjectFound('🧸 Boneka Bebek')}
             />
 
@@ -182,7 +165,7 @@ export default function RumahMain() {
                 📖 Lihat Benda yang Dicari
             </button>
 
-            {/* Tampilkan kartu benda */}
+            {/* Kartu daftar benda */}
             {showObjectCard && (
                 <CardObjectKamar
                     data={objectData}

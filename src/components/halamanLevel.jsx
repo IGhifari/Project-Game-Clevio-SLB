@@ -9,6 +9,7 @@ import sekolahImage from '../assets/background/cardsekolah.png';
 import lockIcon from '../assets/object/gembok.png';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
+import Puzzle from '../assets/background/puzzle.png'
 
 export default function HalamanLevel() {
     const [isRumahCompleted, setIsRumahCompleted] = useState(false);
@@ -74,61 +75,68 @@ export default function HalamanLevel() {
         }
     };
 
-    // Tombol Kustom untuk Navigasi
-    const CustomNextArrow = ({ onClick }) => (
-        <button
-            onClick={onClick}
-            style={{
-                position: 'absolute',
-                top: '50%',
-                right: '10px',
-                transform: 'translateY(-50%)',
-                backgroundColor: '#ffcc00',
-                border: 'none',
-                borderRadius: '50%',
-                width: '50px',
-                height: '50px',
-                cursor: 'pointer',
-                boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)',
-                zIndex: 1,
-            }}
-        >
-            ➡️
-        </button>
-    );
-
-    const CustomPrevArrow = ({ onClick }) => (
-        <button
-            onClick={onClick}
-            style={{
-                position: 'absolute',
-                top: '50%',
-                left: '10px',
-                transform: 'translateY(-50%)',
-                backgroundColor: '#ffcc00',
-                border: 'none',
-                borderRadius: '50%',
-                width: '50px',
-                height: '50px',
-                cursor: 'pointer',
-                  boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)',
-                zIndex: 1,
-            }}
-        >
-            ⬅️
-        </button>
-    );
+    const CustomNextArrow = (props) => {
+        const { onClick, className, style } = props;
+        return (
+            <div
+                className={className}
+                onClick={onClick}
+                style={{
+                    ...style,
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    right: '10px',
+                    zIndex: 2,
+                    backgroundColor: '#ffcc00',
+                    borderRadius: '50%',
+                    width: '50px',
+                    height: '50px',
+                    boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)',
+                }}
+            >
+                ➡️
+            </div>
+        );
+    };
+    
+    const CustomPrevArrow = (props) => {
+        const { onClick, className, style } = props;
+        return (
+            <div
+                className={className}
+                onClick={onClick}
+                style={{
+                    ...style,
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    left: '10px',
+                    zIndex: 2,
+                    backgroundColor: '#ffcc00',
+                    borderRadius: '50%',
+                    width: '50px',
+                    height: '50px',
+                    boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)',
+                }}
+            >
+                ⬅️
+            </div>
+        );
+    };
+    
 
     const settings = {
         dots: true,
-        infinite: false,
+        infinite: true, // ubah dari false ke true
         speed: 500,
         slidesToShow: 1,
         slidesToScroll: 1,
-        nextArrow: <CustomNextArrow />, // Tombol Next
-        prevArrow: <CustomPrevArrow />, // Tombol Prev
-        afterChange: (current) => setSlideIndex(current), // Update index saat slide berubah
+        nextArrow: <CustomNextArrow />,
+        prevArrow: <CustomPrevArrow />,
+        afterChange: (current) => setSlideIndex(current),
     };
+    
 
     // Fungsi untuk menangani input keyboard
     useEffect(() => {
@@ -151,7 +159,13 @@ export default function HalamanLevel() {
     return (
         <div
             style={{
-                backgroundImage: `url(${slideIndex === 1 ? pekerjaanbg : backgroundImage})`,
+                backgroundImage: `url(${
+                    slideIndex === 1 
+                        ? pekerjaanbg 
+                        : slideIndex === 2 
+                            ? Puzzle 
+                            : backgroundImage
+                })`,
                 backgroundSize: 'cover',
                 backgroundPosition: 'center',
                 height: '100vh',
@@ -292,7 +306,7 @@ export default function HalamanLevel() {
                 {/* Slide 2: Tebak Pekerjaan */}
                 <div
                     style={{
-                        background: 'rgba(20, 20, 40, 0.85)', // Lebih gelap
+                        background: 'rgba(20, 20, 40, 0.85)',
                         borderRadius: '20px',
                         padding: '40px 0',
                         margin: '0 auto',
@@ -362,7 +376,18 @@ export default function HalamanLevel() {
                                 Mulai Tebak Pekerjaan
                             </h2>
                             <button
-                                onClick={() => navigate('/halamanlevelpekerjaan')}
+                                onClick={() => {
+                                    // Tambahkan efek fade out
+                                    const button = document.querySelector('.play-button');
+                                    button.style.opacity = '0';
+                                    button.style.transform = 'scale(0.95)';
+                                    
+                                    // Tunggu animasi selesai sebelum navigasi
+                                    setTimeout(() => {
+                                        navigate('/halamanlevelpekerjaan');
+                                    }, 300);
+                                }}
+                                className="play-button"
                                 style={{
                                     background: 'linear-gradient(90deg, #ffb347 60%, #ff5e57 100%)',
                                     color: '#fff',
@@ -376,7 +401,102 @@ export default function HalamanLevel() {
                                     fontFamily: "'Comic Sans MS', cursive, sans-serif",
                                     letterSpacing: 1,
                                     marginTop: '8px',
-                                    transition: 'background 0.2s',
+                                    transition: 'all 0.3s ease-in-out',
+                                }}
+                            >
+                                Play
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                {/* Slide 3: Puzzle Game */}
+                <div
+                    style={{
+                        background: 'rgba(40, 20, 60, 0.85)',
+                        borderRadius: '20px',
+                        padding: '40px 0',
+                        margin: '0 auto',
+                        width: '90%',
+                        boxShadow: '0 8px 24px rgba(0,0,0,0.7)',
+                        display: 'flex',
+                        flexDirection: 'column',
+                        alignItems: 'center',
+                    }}
+                >
+                    <h1
+                        style={{
+                            color: '#a5d6a7',
+                            fontSize: '3rem',
+                            textShadow: '2px 2px 8px rgba(0,0,0,0.9)',
+                            fontFamily: "'Comic Sans MS', cursive, sans-serif",
+                            marginBottom: '32px',
+                        }}
+                    >
+                        PUZZLE GAME
+                    </h1>
+                    <div
+                        style={{
+                            display: 'flex',
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                            width: '100%',
+                        }}
+                    >
+                        <div
+                            style={{
+                                backgroundColor: '#fff',
+                                borderRadius: '18px',
+                                boxShadow: '0 6px 18px rgba(0,0,0,0.25)',
+                                padding: '36px 48px',
+                                textAlign: 'center',
+                                maxWidth: '340px',
+                                width: '100%',
+                                margin: '0 auto',
+                                display: 'flex',
+                                flexDirection: 'column',
+                                alignItems: 'center',
+                            }}
+                        >
+                            <img
+                                src={Puzzle}
+                                alt="Puzzle Game"
+                                style={{
+                                    width: '180px',
+                                    height: '120px',
+                                    objectFit: 'cover',
+                                    borderRadius: '12px',
+                                    marginBottom: '24px',
+                                    boxShadow: '0 2px 8px rgba(0,0,0,0.18)',
+                                }}
+                            />
+                            <h2
+                                style={{
+                                    color: '#222',
+                                    fontFamily: "'Comic Sans MS', cursive, sans-serif",
+                                    fontSize: '1.7rem',
+                                    marginBottom: '18px',
+                                    letterSpacing: 1,
+                                }}
+                            >
+                                Mulai Puzzle Game
+                            </h2>
+                            <button
+                                onClick={() => navigate('/puzzlegame')}
+                                style={{
+                                    background: 'linear-gradient(90deg, #a5d6a7 60%, #81c784 100%)',
+                                    color: '#fff',
+                                    border: 'none',
+                                    borderRadius: '12px',
+                                    padding: '14px 44px',
+                                    fontWeight: 'bold',
+                                    fontSize: '1.3rem',
+                                    cursor: 'pointer',
+                                    boxShadow: '0 2px 12px #a5d6a7',
+                                    fontFamily: "'Comic Sans MS', cursive, sans-serif",
+                                    letterSpacing: 1,
+                                    marginTop: '8px',
+                                    transition: 'all 0.3s ease',
                                 }}
                             >
                                 Play

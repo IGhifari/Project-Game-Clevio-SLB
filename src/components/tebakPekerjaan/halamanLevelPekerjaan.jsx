@@ -1,5 +1,7 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import pekerjaanbg from "../../assets/background/pekerjaanbg.png";
+import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 
 const levels = [
   { number: 1, stars: 1, unlocked: true },
@@ -15,6 +17,44 @@ const levels = [
 ];
 
 export default function HalamanLevelPekerjaan() {
+  const [selectedLevel, setSelectedLevel] = useState(null);
+  const [isPageLoaded, setIsPageLoaded] = useState(false);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    // Trigger fade in animation after component mounts
+    setTimeout(() => {
+      setIsPageLoaded(true);
+    }, 100);
+  }, []);
+
+  const handleLevelClick = (level) => {
+    if (level.unlocked) {
+      setSelectedLevel(level.number);
+      Swal.fire({
+        title: `Level ${level.number}`,
+        text: "Siap untuk bermain?",
+        icon: "question",
+        showCancelButton: true,
+        confirmButtonColor: "#ff5e57",
+        cancelButtonColor: "#666",
+        confirmButtonText: "Mulai",
+        cancelButtonText: "Batal",
+        background: "#fff",
+        customClass: {
+          title: "swal-title",
+          content: "swal-content",
+          confirmButton: "swal-confirm-button",
+          cancelButton: "swal-cancel-button"
+        }
+      }).then((result) => {
+        if (result.isConfirmed) {
+          navigate(`/level${level.number}`);
+        }
+      });
+    }
+  };
+
   return (
     <div
       style={{
@@ -22,6 +62,10 @@ export default function HalamanLevelPekerjaan() {
         backgroundSize: "cover",
         minHeight: "100vh",
         padding: "40px 0",
+        position: "relative",
+        opacity: isPageLoaded ? 1 : 0,
+        transform: isPageLoaded ? 'translateY(0)' : 'translateY(20px)',
+        transition: 'all 0.5s ease-in-out',
       }}
     >
       <div
@@ -33,6 +77,10 @@ export default function HalamanLevelPekerjaan() {
           padding: 40,
           boxShadow: "0 12px 40px rgba(0,0,0,0.18)",
           border: "8px solid #ffb347",
+          opacity: isPageLoaded ? 1 : 0,
+          transform: isPageLoaded ? 'scale(1)' : 'scale(0.95)',
+          transition: 'all 0.5s ease-in-out',
+          transitionDelay: '0.2s',
         }}
       >
         <h2
@@ -44,6 +92,10 @@ export default function HalamanLevelPekerjaan() {
             fontSize: 44,
             letterSpacing: 2,
             textShadow: "2px 2px 0 #fff176, 4px 4px 0 #ffb347",
+            opacity: isPageLoaded ? 1 : 0,
+            transform: isPageLoaded ? 'translateY(0)' : 'translateY(20px)',
+            transition: 'all 0.5s ease-in-out',
+            transitionDelay: '0.3s',
           }}
         >
           Pilih Level
@@ -55,11 +107,16 @@ export default function HalamanLevelPekerjaan() {
             gap: 32,
             marginBottom: 40,
             justifyItems: "center",
+            opacity: isPageLoaded ? 1 : 0,
+            transform: isPageLoaded ? 'translateY(0)' : 'translateY(20px)',
+            transition: 'all 0.5s ease-in-out',
+            transitionDelay: '0.4s',
           }}
         >
-          {levels.map((level) => (
+          {levels.map((level, index) => (
             <div
               key={level.number}
+              onClick={() => handleLevelClick(level)}
               style={{
                 background: level.unlocked
                   ? "linear-gradient(135deg, #fffde4 60%, #ffd54f 100%)"
@@ -77,8 +134,10 @@ export default function HalamanLevelPekerjaan() {
                 fontWeight: "bold",
                 fontSize: 22,
                 cursor: level.unlocked ? "pointer" : "not-allowed",
-                opacity: level.unlocked ? 1 : 0.7,
-                transition: "transform 0.2s",
+                opacity: level.unlocked ? (isPageLoaded ? 1 : 0) : 0.7,
+                transform: isPageLoaded ? 'scale(1)' : 'scale(0.95)',
+                transition: 'all 0.3s ease',
+                transitionDelay: `${0.1 * index}s`,
                 fontFamily: "Comic Sans MS, Comic Sans, cursive",
                 display: "flex",
                 flexDirection: "column",
@@ -182,27 +241,31 @@ export default function HalamanLevelPekerjaan() {
             </div>
           ))}
         </div>
-        <div style={{ display: "flex", justifyContent: "center", gap: 16 }}>
-          <button
-            style={{
-              background: "linear-gradient(90deg, #ffb347 60%, #ff5e57 100%)",
-              color: "#fff",
-              border: "none",
-              borderRadius: 22,
-              padding: "18px 56px",
-              fontWeight: "bold",
-              fontSize: 28,
-              cursor: "pointer",
-              boxShadow: "0 2px 12px #ffb347",
-              fontFamily: "Comic Sans MS, Comic Sans, cursive",
-              letterSpacing: 1,
-              marginTop: 8,
-            }}
-          >
-            Start
-          </button>
-        </div>
       </div>
+
+      <style>
+        {`
+          .swal-title {
+            font-family: "Comic Sans MS", cursive !important;
+            font-size: 32px !important;
+            color: #ff5e57 !important;
+          }
+          .swal-content {
+            font-family: "Comic Sans MS", cursive !important;
+            font-size: 20px !important;
+          }
+          .swal-confirm-button {
+            font-family: "Comic Sans MS", cursive !important;
+            font-size: 18px !important;
+            padding: 10px 30px !important;
+          }
+          .swal-cancel-button {
+            font-family: "Comic Sans MS", cursive !important;
+            font-size: 18px !important;
+            padding: 10px 30px !important;
+          }
+        `}
+      </style>
     </div>
   );
 }

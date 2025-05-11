@@ -40,9 +40,22 @@ const Level1 = () => {
     }
   }, [result, timeLeft]);
 
+  useEffect(() => {
+    if (result === "benar") {
+      // buka level 2
+    }
+  }, [result]);
+
   const handleChoose = (card) => {
     if (card.name === "Dokter") {
       setResult("benar");
+      // Langsung unlock level 2 saat benar
+      localStorage.setItem(
+        "pekerjaanLevelUnlocked",
+        JSON.stringify(
+          Math.max(1, Number(localStorage.getItem("pekerjaanLevelUnlocked")))
+        )
+      );
     } else {
       setResult("salah");
     }
@@ -50,7 +63,7 @@ const Level1 = () => {
 
   const handleNextStage = () => {
     // Ganti dengan routing ke stage berikutnya
-    window.location.href = "/stage2"; // sesuaikan path stage berikutnya
+    window.location.href = "/level2"; // sesuaikan path stage berikutnya
   };
 
   const handleHome = () => {

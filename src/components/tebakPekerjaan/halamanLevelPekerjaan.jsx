@@ -3,17 +3,19 @@ import pekerjaanbg from "../../assets/background/pekerjaanbg.png";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 
+const maxLevel = Number(localStorage.getItem("pekerjaanLevelUnlocked") || 1);
+
 const levels = [
   { number: 1, stars: 1, unlocked: true },
-  { number: 2, stars: 0, unlocked: false },
-  { number: 3, stars: 0, unlocked: false },
-  { number: 4, stars: 0, unlocked: false },
-  { number: 5, stars: 0, unlocked: false },
-  { number: 6, stars: 0, unlocked: false },
-  { number: 7, stars: 0, unlocked: false },
-  { number: 8, stars: 0, unlocked: false },
-  { number: 9, stars: 0, unlocked: false },
-  { number: 10, stars: 0, unlocked: false },
+  { number: 2, stars: 0, unlocked: maxLevel >= 2 },
+  { number: 3, stars: 0, unlocked: maxLevel >= 3 },
+  { number: 4, stars: 0, unlocked: maxLevel >= 4 },
+  { number: 5, stars: 0, unlocked: maxLevel >= 5 },
+  { number: 6, stars: 0, unlocked: maxLevel >= 6 },
+  { number: 7, stars: 0, unlocked: maxLevel >= 7 },
+  { number: 8, stars: 0, unlocked: maxLevel >= 8 },
+  { number: 9, stars: 0, unlocked: maxLevel >= 9 },
+  { number: 10, stars: 0, unlocked: maxLevel >= 10 },
 ];
 
 export default function HalamanLevelPekerjaan() {
@@ -50,6 +52,8 @@ export default function HalamanLevelPekerjaan() {
       }).then((result) => {
         if (result.isConfirmed) {
           navigate(`/level${level.number}`);
+          // Setelah setResult("benar");
+          localStorage.setItem("pekerjaanLevelUnlocked", JSON.stringify(Math.max(2, Number(localStorage.getItem("pekerjaanLevelUnlocked") || 1) + 1)));
         }
       });
     }

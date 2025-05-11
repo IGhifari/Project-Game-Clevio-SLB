@@ -2,9 +2,9 @@ import React from "react";
 import pekerjaanbg from "../../assets/background/pekerjaanbg.png";
 
 const levels = [
-  { number: 1, stars: 3, unlocked: true },
-  { number: 2, stars: 2, unlocked: true },
-  { number: 3, stars: 1, unlocked: true },
+  { number: 1, stars: 1, unlocked: true },
+  { number: 2, stars: 0, unlocked: false },
+  { number: 3, stars: 0, unlocked: false },
   { number: 4, stars: 0, unlocked: false },
   { number: 5, stars: 0, unlocked: false },
   { number: 6, stars: 0, unlocked: false },
@@ -125,19 +125,16 @@ export default function HalamanLevelPekerjaan() {
                     {level.number}
                   </div>
                   <div style={{ marginTop: 8 }}>
-                    {[1, 2, 3].map((star) => (
-                      <span
-                        key={star}
-                        style={{
-                          fontSize: 26,
-                          margin: "0 2px",
-                          filter: star <= level.stars ? "none" : "grayscale(1)",
-                          textShadow: star <= level.stars ? "0 2px 4px #fff176" : "none",
-                        }}
-                      >
-                        ⭐
-                      </span>
-                    ))}
+                    <span
+                      style={{
+                        fontSize: 26,
+                        margin: "0 2px",
+                        filter: level.stars >= 1 ? "none" : "grayscale(1)",
+                        textShadow: level.stars >= 1 ? "0 2px 4px #fff176" : "none",
+                      }}
+                    >
+                      ⭐
+                    </span>
                   </div>
                 </>
               ) : (
@@ -154,18 +151,15 @@ export default function HalamanLevelPekerjaan() {
                     🔒
                   </span>
                   <div>
-                    {[1, 2, 3].map((star) => (
-                      <span
-                        key={star}
-                        style={{
-                          fontSize: 26,
-                          margin: "0 2px",
-                          filter: "grayscale(1)",
-                        }}
-                      >
-                        ⭐
-                      </span>
-                    ))}
+                    <span
+                      style={{
+                        fontSize: 26,
+                        margin: "0 2px",
+                        filter: "grayscale(1)",
+                      }}
+                    >
+                      ⭐
+                    </span>
                   </div>
                 </div>
               )}

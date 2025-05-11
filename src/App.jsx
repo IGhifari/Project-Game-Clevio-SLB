@@ -12,6 +12,7 @@ import LapanganSekolah from './components/lapanganSekolah';
 import Reward from './components/reward/rewardRumah'
 import HalamanLevelPekerjaan from './components/tebakPekerjaan/halamanLevelPekerjaan';
 import RewardSekolah from './components/reward/rewardSekolah';
+import Level1 from './components/tebakPekerjaan/levelPekerjaan/level1';
 function App() {
 
   return (
@@ -28,6 +29,9 @@ function App() {
         <Route path="/reward" element={<Reward />} />
         <Route path='/rewardSekolah' element={<RewardSekolah/>}></Route>
         <Route path="/halamanLevelPekerjaan" element={<HalamanLevelPekerjaan />} /> 
+        <Route path="/level1" element={<Level1 />} />
+        {/* Tambahkan route lainnya sesuai kebutuhan */}
+
       </Routes>
     </BrowserRouter>
   )

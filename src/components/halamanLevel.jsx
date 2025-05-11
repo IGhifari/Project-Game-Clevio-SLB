@@ -146,7 +146,7 @@ export default function HalamanLevel() {
                     marginBottom: '20px',
                 }}
             >
-                Temukan Barang
+                TEMUKAN BARANG
             </h1>
                     <div
                         style={{
@@ -267,7 +267,7 @@ export default function HalamanLevel() {
                     marginBottom: '20px',
                 }}
             >
-                COCOKAN BARANG
+                TEBAK PEKERJAAN
             </h1>
                     <div
                         style={{

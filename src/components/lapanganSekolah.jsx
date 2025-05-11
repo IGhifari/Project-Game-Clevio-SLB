@@ -59,7 +59,7 @@ export default function RumahMain() {
                 className="absolute cursor-pointer   transition-transform"
     
                 style={{
-                    top: '40%',    // Adjust these values to position the pillow
+                    top: '41.2%',    // Adjust these values to position the pillow
                     left: '5%',   // where you want it on the background
                     width: '130px', // Adjust size as needed
                     height: 'auto'  
@@ -81,9 +81,9 @@ export default function RumahMain() {
                 className="absolute cursor-pointer   transition-transform"
               
                 style={{
-                    top: '82%',    // Adjust these values to position the pillow
-                    left: '3.4%',   // where you want it on the background
-                    width: '85px', // Adjust size as needed
+                    top: '79.2%',    // Adjust these values to position the pillow
+                    left: '3.8%',   // where you want it on the background
+                    width: '83px', // Adjust size as needed
                     height: 'auto'  
                 }}
                 onClick={() => {
@@ -102,9 +102,9 @@ export default function RumahMain() {
                 className="absolute cursor-pointer   transition-transform"
              
                 style={{
-                    top: '34%',    // Adjust these values to position the pillow
-                    left: '87.9%',   // where you want it on the background
-                    width: '185px', // Adjust size as needed
+                    top: '37.4%',    // Adjust these values to position the pillow
+                    left: '88.3%',   // where you want it on the background
+                    width: '180px', // Adjust size as needed
                     height: 'auto'  
                 }}
                 onClick={() => {

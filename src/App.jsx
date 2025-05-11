@@ -9,8 +9,9 @@ import Ruangtamu from './components/ruangtamu';
 import KamarMandiRumah from './components/kamarMandiRumah';
 import PerpustakaanSekolah from './components/perpustakaanSekolah';
 import LapanganSekolah from './components/lapanganSekolah';
-import Reward from './components/reward/reward';
+import Reward from './components/reward/rewardRumah'
 import HalamanLevelPekerjaan from './components/tebakPekerjaan/halamanLevelPekerjaan';
+import RewardSekolah from './components/reward/rewardSekolah';
 function App() {
 
   return (
@@ -25,6 +26,7 @@ function App() {
         <Route path="/perpustakaanSekolah" element={<PerpustakaanSekolah />} />
         <Route path="/lapanganSekolah" element={<LapanganSekolah />} />
         <Route path="/reward" element={<Reward />} />
+        <Route path='/rewardSekolah' element={<RewardSekolah/>}></Route>
         <Route path="/halamanLevelPekerjaan" element={<HalamanLevelPekerjaan />} /> 
       </Routes>
     </BrowserRouter>

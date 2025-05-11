@@ -43,6 +43,13 @@ export default function Level4() {
   const handleChoose = (card) => {
     if (card.name === "Guru") {
       setResult("benar");
+      // Unlock level 5
+      localStorage.setItem(
+        "pekerjaanLevelUnlocked",
+        JSON.stringify(
+          Math.max(5, Number(localStorage.getItem("pekerjaanLevelUnlocked") ) )
+        )
+      );
     } else {
       setResult("salah");
     }
@@ -172,16 +179,6 @@ export default function Level4() {
                       boxShadow: "0 2px 8px rgba(0,0,0,0.07)",
                     }}
                   />
-                  <h3
-                    style={{
-                      margin: "8px 0 16px",
-                      fontSize: 22,
-                      color: "#1a1a1a",
-                      fontWeight: 700,
-                    }}
-                  >
-                    {card.name}
-                  </h3>
                   <button
                     style={{
                       background: "#ffd600",

@@ -46,7 +46,7 @@ const Level2 = () => {
       // Unlock level 3 jika belum terbuka
       localStorage.setItem(
         "pekerjaanLevelUnlocked",
-        JSON.stringify(Math.max(3, Number(localStorage.getItem("pekerjaanLevelUnlocked") || 1)))
+        JSON.stringify(Math.max(3, Number(localStorage.getItem("pekerjaanLevelUnlocked"))))
       );
     } else {
       setResult("salah");

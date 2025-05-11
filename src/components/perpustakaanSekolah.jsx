@@ -135,12 +135,12 @@ export default function PerpustakaanSekolah () {
                 alt="hurufA"
                 className="absolute cursor-pointer hover:scale-105 transition-transform"
                 style={{
-                    top: '41.2%',
-                    left: '5%',
-                    width: '130px',
+                    top: '%',
+                    left: '44%',
+                    width: '135px',
                     height: 'auto'  
                 }}
-                onClick={() => handleObjectFound('🌸 Bunga')}
+                onClick={() => handleObjectFound('Huruf A')}
             />
 
             <img 
@@ -148,12 +148,12 @@ export default function PerpustakaanSekolah () {
                 alt="Abjad"
                 className="absolute cursor-pointer hover:scale-105 transition-transform"
                 style={{
-                    top: '79.2%',
-                    left: '3.8%',
-                    width: '83px',
+                    top: '11.9%',
+                    left: '79.5%',
+                    width: '148px',
                     height: 'auto'  
                 }}
-                onClick={() => handleObjectFound('🏀 Bola Basket')}
+                onClick={() => handleObjectFound('Abjad')}
             />
 
             <img 
@@ -161,12 +161,12 @@ export default function PerpustakaanSekolah () {
                 alt="meja"
                 className="absolute cursor-pointer hover:scale-105 transition-transform"
                 style={{
-                    top: '37.4%',
-                    left: '88.3%',
-                    width: '180px',
+                    top: '75.5%',
+                    left: '31.3%',
+                    width: '250px',
                     height: 'auto'  
                 }}
-                onClick={() => handleObjectFound('🪑 Ayunan')}
+                onClick={() => handleObjectFound('Meja')}
             />
 
             <button

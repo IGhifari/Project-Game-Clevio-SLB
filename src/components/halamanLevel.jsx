@@ -13,8 +13,32 @@ import 'slick-carousel/slick/slick-theme.css';
 export default function HalamanLevel() {
     const [isRumahCompleted, setIsRumahCompleted] = useState(false);
     const [slideIndex, setSlideIndex] = useState(0); // Tambahkan state ini
+    const [isPageLoaded, setIsPageLoaded] = useState(false);
     const navigate = useNavigate();
     const sliderRef = useRef(null); // Referensi untuk slider
+
+    useEffect(() => {
+        // Trigger fade in animation after component mounts
+        setTimeout(() => {
+            setIsPageLoaded(true);
+        }, 100);
+
+        // Cek apakah semua level rumah sudah selesai
+        const rumahmainStars = parseInt(localStorage.getItem('rumahmain_stars')) || 0;
+        const kamarmandiStars = parseInt(localStorage.getItem('kamarmandi_stars')) || 0;
+        const ruangtamuStars = parseInt(localStorage.getItem('ruangtamu_stars')) || 0;
+
+        const totalStars = rumahmainStars + kamarmandiStars + ruangtamuStars;
+        
+        // Jika total bintang 9 (3 level x 3 bintang), maka level sekolah terbuka
+        if (totalStars === 9) {
+            setIsRumahCompleted(true);
+            localStorage.setItem('sekolahUnlocked', 'true');
+        } else {
+            const unlocked = localStorage.getItem('sekolahUnlocked') === 'true';
+            setIsRumahCompleted(unlocked);
+        }
+    }, []);
 
     const handleLevelSelection = (level) => {
         if (level === 'Di Rumah') {
@@ -24,8 +48,7 @@ export default function HalamanLevel() {
                 icon: 'success',
                 confirmButtonText: 'Ayo Mulai!',
             }).then(() => {
-                setIsRumahCompleted(true); // Tandai level "Di Rumah" selesai
-                navigate('/rumahmain'); // Arahkan ke halaman Rumah
+                navigate('/rumahmain');
             });
         } else if (level === 'Sekolah' && isRumahCompleted) {
             Swal.fire({
@@ -34,12 +57,17 @@ export default function HalamanLevel() {
                 icon: 'success',
                 confirmButtonText: 'Ayo Mulai!',
             }).then(() => {
-                navigate('/sekolahmain'); // Arahkan ke halaman Sekolah
+                navigate('/sekolahmain');
             });
         } else {
             Swal.fire({
                 title: 'Level Terkunci!',
-                text: 'Selesaikan level "Di Rumah" terlebih dahulu untuk membuka level ini.',
+                html: `
+                    <div style="font-family: Comic Sans MS; font-size: 18px;">
+                        <p>Selesaikan semua level di Rumah terlebih dahulu!</p>
+                        <p>Kumpulkan 9 bintang untuk membuka level Sekolah.</p>
+                    </div>
+                `,
                 icon: 'warning',
                 confirmButtonText: 'OK',
             });
@@ -83,7 +111,7 @@ export default function HalamanLevel() {
                 width: '50px',
                 height: '50px',
                 cursor: 'pointer',
-                boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)',
+                  boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)',
                 zIndex: 1,
             }}
         >
@@ -134,11 +162,12 @@ export default function HalamanLevel() {
                 padding: '20px',
                 textAlign: 'center',
                 width: '100%',
-                transition: 'background-image 0.5s',
+                transition: 'background-image 0.5s, opacity 0.5s ease-in-out',
+                opacity: isPageLoaded ? 1 : 0,
             }}
         >
             
-            <Slider ref={sliderRef} {...settings} style={{ width: '90%' }}>
+            <Slider ref={sliderRef} {...settings} style={{ width: '90%', opacity: isPageLoaded ? 1 : 0, transform: isPageLoaded ? 'translateY(0)' : 'translateY(20px)', transition: 'all 0.5s ease-in-out' }}>
                 {/* Slide 1: Pilih Level */}
                 <div>
                     <h1

@@ -1,8 +1,7 @@
 
 
 
-export default function Puzzle3(){
-
+export default function Level8 () {
     return(
         <div>
             

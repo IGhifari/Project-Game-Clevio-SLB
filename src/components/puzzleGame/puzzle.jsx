@@ -13,19 +13,19 @@ export default function Puzzle() {
 
     // Inisialisasi puzzle
     useEffect(() => {
+        // Buat 4 potongan puzzle (2x2)
         const newPieces = Array.from({ length: puzzleSize * puzzleSize }, (_, i) => ({
             id: i,
             correctPosition: i,
             currentPosition: null,
             image: puzzleBg,
-            backgroundPosition: `${(i % puzzleSize) * 50}% ${Math.floor(i / puzzleSize) * 50}%`, // Menentukan posisi background potongan puzzle
+            // Perbaikan posisi background untuk setiap potongan
+            backgroundPosition: `${(i % 2) * 100}% ${Math.floor(i / 2) * 100}%`,
         }));
 
-        // Acak posisi potongan
         const shuffledPieces = [...newPieces].sort(() => Math.random() - 0.5);
         setPieces(shuffledPieces);
 
-        // Buat slot kosong
         const newSlots = Array.from({ length: puzzleSize * puzzleSize }, (_, i) => ({
             id: i,
             occupied: false,
@@ -49,20 +49,41 @@ export default function Puzzle() {
         e.preventDefault();
         if (!draggedPiece) return;
 
-        // Update posisi potongan
+        // Simpan potongan yang ada di slot target
+        const targetSlot = slots.find(slot => slot.id === slotId);
+        const existingPieceId = targetSlot?.pieceId;
+
+        // Update posisi potongan yang di-drag
         const updatedPieces = pieces.map(piece => {
             if (piece.id === draggedPiece.id) {
                 return { ...piece, currentPosition: slotId };
+            }
+            // Jika ada potongan yang digeser, kembalikan ke area potongan
+            if (piece.id === existingPieceId) {
+                return { ...piece, currentPosition: null };
             }
             return piece;
         });
 
         // Update status slot
-        const updatedSlots = slots.map(slot => ({
-            ...slot,
-            occupied: slot.id === slotId,
-            pieceId: slot.id === slotId ? draggedPiece.id : slot.pieceId
-        }));
+        const updatedSlots = slots.map(slot => {
+            if (slot.id === slotId) {
+                return {
+                    ...slot,
+                    occupied: true,
+                    pieceId: draggedPiece.id
+                };
+            }
+            // Jika slot ini sebelumnya berisi potongan yang di-drag, kosongkan
+            if (slot.pieceId === draggedPiece.id) {
+                return {
+                    ...slot,
+                    occupied: false,
+                    pieceId: null
+                };
+            }
+            return slot;
+        });
 
         setPieces(updatedPieces);
         setSlots(updatedSlots);
@@ -92,7 +113,7 @@ export default function Puzzle() {
                         confirmButton: 'swal-confirm-button'
                     }
                 }).then(() => {
-                    navigate('/halamanlevel');
+                    navigate('/puzzlegame2');
                 });
             }
         }
@@ -169,7 +190,7 @@ export default function Puzzle() {
                                         width: '150px',
                                         height: '150px',
                                         backgroundImage: `url(${piece.image})`,
-                                        backgroundSize: '200% 200%', // Ukuran latar belakang disesuaikan
+                                        backgroundSize: '200% 200%',
                                         backgroundPosition: piece.backgroundPosition,
                                         border: '2px solid #fff',
                                         borderRadius: '8px',
@@ -218,7 +239,7 @@ export default function Puzzle() {
                                             width: '100%',
                                             height: '100%',
                                             backgroundImage: `url(${pieces.find(p => p.id === slot.pieceId).image})`,
-                                            backgroundSize: '200% 200%', // Ukuran latar belakang disesuaikan
+                                            backgroundSize: '200% 200%',
                                             backgroundPosition: pieces.find(p => p.id === slot.pieceId).backgroundPosition,
                                             borderRadius: '6px',
                                             cursor: 'move',
@@ -249,17 +270,26 @@ export default function Puzzle() {
                     }}>
                         Gambar Asli
                     </h3>
-                    <img 
-                        src={puzzleBg} 
-                        alt="Referensi Puzzle"
-                        style={{
-                            width: '300px',
-                            height: '300px',
-                            objectFit: 'cover',
-                            borderRadius: '8px',
-                            boxShadow: '0 4px 8px rgba(0,0,0,0.1)',
-                        }}
-                    />
+                    <div style={{
+                        width: '300px',
+                        height: '300px',
+                        background: '#fff',
+                        padding: '2px',
+                        borderRadius: '8px',
+                        boxShadow: '0 4px 8px rgba(0,0,0,0.1)',
+                        overflow: 'hidden',
+                    }}>
+                        <img 
+                            src={puzzleBg} 
+                            alt="Gambar Asli"
+                            style={{
+                                width: '100%',
+                                height: '100%',
+                                objectFit: 'cover',
+                                borderRadius: '6px',
+                            }}
+                        />
+                    </div>
                 </div>
             </div>
 

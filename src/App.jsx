@@ -25,6 +25,7 @@ import Level10 from './components/tebakPekerjaan/levelPekerjaan/level10';
 import Puzzle from './components/puzzleGame/puzzle';
 import Puzzle2 from './components/puzzleGame/puzzle2';
 import Puzzle3 from './components/puzzleGame/puzzle3';
+import RewardPuzzle from './components/puzzleGame/rewardPuzzle';
 function App() {
 
   return (
@@ -54,6 +55,7 @@ function App() {
         <Route path='/puzzlegame' element={<Puzzle/>}></Route>
         <Route path='/puzzlegame2' element={<Puzzle2/>}></Route>
         <Route path='/puzzlegame3' element={<Puzzle3/>}></Route>
+        <Route path='rewardpuzzle' element={<RewardPuzzle/>}></Route>
 
         {/* Tambahkan route lainnya sesuai kebutuhan */}
 

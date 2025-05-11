@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import Slider from 'react-slick';
 import backgroundImage from '../assets/background/levelchoiche.png';
+import pekerjaanbg from '../assets/background/pekerjaanbg.png'; // Tambahkan ini
 import rumahImage from '../assets/background/cardrumah.png';
 import sekolahImage from '../assets/background/cardsekolah.png';
 import lockIcon from '../assets/object/gembok.png';
@@ -11,6 +12,7 @@ import 'slick-carousel/slick/slick-theme.css';
 
 export default function HalamanLevel() {
     const [isRumahCompleted, setIsRumahCompleted] = useState(false);
+    const [slideIndex, setSlideIndex] = useState(0); // Tambahkan state ini
     const navigate = useNavigate();
     const sliderRef = useRef(null); // Referensi untuk slider
 
@@ -97,6 +99,7 @@ export default function HalamanLevel() {
         slidesToScroll: 1,
         nextArrow: <CustomNextArrow />, // Tombol Next
         prevArrow: <CustomPrevArrow />, // Tombol Prev
+        afterChange: (current) => setSlideIndex(current), // Update index saat slide berubah
     };
 
     // Fungsi untuk menangani input keyboard
@@ -120,7 +123,7 @@ export default function HalamanLevel() {
     return (
         <div
             style={{
-                backgroundImage: `url(${backgroundImage})`,
+                backgroundImage: `url(${slideIndex === 1 ? pekerjaanbg : backgroundImage})`,
                 backgroundSize: 'cover',
                 backgroundPosition: 'center',
                 height: '100vh',
@@ -131,6 +134,7 @@ export default function HalamanLevel() {
                 padding: '20px',
                 textAlign: 'center',
                 width: '100%',
+                transition: 'background-image 0.5s',
             }}
         >
             
@@ -256,122 +260,97 @@ export default function HalamanLevel() {
                     </div>
                 </div>
 
-                {/* Slide 1: Pilih Level */}
-                <div>
+                {/* Slide 2: Tebak Pekerjaan */}
+                <div
+                    style={{
+                        background: 'rgba(20, 20, 40, 0.85)', // Lebih gelap
+                        borderRadius: '20px',
+                        padding: '40px 0',
+                        margin: '0 auto',
+                        width: '90%',
+                        boxShadow: '0 8px 24px rgba(0,0,0,0.7)',
+                        display: 'flex',
+                        flexDirection: 'column',
+                        alignItems: 'center',
+                    }}
+                >
                     <h1
-                style={{
-                    color: '#fff',
-                    fontSize: '3rem',
-                    textShadow: '2px 2px 4px rgba(0, 0, 0, 0.7)',
-                    fontFamily: "'Comic Sans MS', cursive, sans-serif",
-                    marginBottom: '20px',
-                }}
-            >
-                TEBAK PEKERJAAN
-            </h1>
+                        style={{
+                            color: '#ffe066',
+                            fontSize: '3rem',
+                            textShadow: '2px 2px 8px rgba(0,0,0,0.9)',
+                            fontFamily: "'Comic Sans MS', cursive, sans-serif",
+                            marginBottom: '32px',
+                        }}
+                    >
+                        TEBAK PEKERJAAN
+                    </h1>
                     <div
                         style={{
                             display: 'flex',
-                            gap: '350px',
-                            justifyContent: 'space-between',
+                            justifyContent: 'center',
                             alignItems: 'center',
-                            width: '75%',
-                            marginTop: '20px',
-                            flexWrap: 'wrap',
-                            marginLeft: '180px',
+                            width: '100%',
                         }}
                     >
-                        {/* Card untuk level "Di Rumah" */}
+                        {/* Card tunggal dengan tombol Play */}
                         <div
                             style={{
                                 backgroundColor: '#fff',
-                                borderRadius: '15px',
-                                boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)',
-                                padding: '20px',
+                                borderRadius: '18px',
+                                boxShadow: '0 6px 18px rgba(0,0,0,0.25)',
+                                padding: '36px 48px',
                                 textAlign: 'center',
-                                flex: 1,
-                                maxWidth: '45%',
+                                maxWidth: '340px',
+                                width: '100%',
+                                margin: '0 auto',
+                                display: 'flex',
+                                flexDirection: 'column',
+                                alignItems: 'center',
                             }}
                         >
                             <img
-                                src={rumahImage}
-                                alt="Di Rumah"
+                                src={pekerjaanbg}
+                                alt="Tebak Pekerjaan"
                                 style={{
-                                    width: '100%',
-                                    borderRadius: '10px',
-                                    marginBottom: '10px',
+                                    width: '180px',
+                                    height: '120px',
+                                    objectFit: 'cover',
+                                    borderRadius: '12px',
+                                    marginBottom: '24px',
+                                    boxShadow: '0 2px 8px rgba(0,0,0,0.18)',
                                 }}
                             />
-                            <button
-                                onClick={() => handleLevelSelection('Di Rumah')}
+                            <h2
                                 style={{
-                                    backgroundColor: '#ffcc00',
+                                    color: '#222',
+                                    fontFamily: "'Comic Sans MS', cursive, sans-serif",
+                                    fontSize: '1.7rem',
+                                    marginBottom: '18px',
+                                    letterSpacing: 1,
+                                }}
+                            >
+                                Mulai Tebak Pekerjaan
+                            </h2>
+                            <button
+                                onClick={() => navigate('/halamanlevelpekerjaan')}
+                                style={{
+                                    background: 'linear-gradient(90deg, #ffb347 60%, #ff5e57 100%)',
+                                    color: '#fff',
                                     border: 'none',
-                                    borderRadius: '10px',
-                                    padding: '10px 20px',
-                                    fontSize: '16px',
+                                    borderRadius: '12px',
+                                    padding: '14px 44px',
+                                    fontWeight: 'bold',
+                                    fontSize: '1.3rem',
                                     cursor: 'pointer',
+                                    boxShadow: '0 2px 12px #ffb347',
                                     fontFamily: "'Comic Sans MS', cursive, sans-serif",
-                                    boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)',
+                                    letterSpacing: 1,
+                                    marginTop: '8px',
+                                    transition: 'background 0.2s',
                                 }}
                             >
-                                Pilih Rumah
-                            </button>
-                        </div>
-
-                        {/* Card untuk level "Sekolah" */}
-                        <div
-                            style={{
-                                backgroundColor: '#fff',
-                                borderRadius: '15px',
-                                boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)',
-                                padding: '20px',
-                                textAlign: 'center',
-                                flex: 1,
-                                maxWidth: '45%',
-                                position: 'relative',
-                            }}
-                        >
-                            <img
-                                src={sekolahImage}
-                                alt="Sekolah"
-                                style={{
-                                    width: '100%',
-                                    borderRadius: '10px',
-                                    marginBottom: '10px',
-                                    filter: isRumahCompleted ? 'none' : 'grayscale(100%)',
-                                }}
-                            />
-                            {!isRumahCompleted && (
-                                <img
-                                    src={lockIcon}
-                                    alt="Terkunci"
-                                    style={{
-                                        position: 'absolute',
-                                        top: '50%',
-                                        left: '50%',
-                                        transform: 'translate(-50%, -50%)',
-                                        width: '600px',
-                                        height: '200px',
-                                        opacity: 0.8,
-                                    }}
-                                />
-                            )}
-                            <button
-                                onClick={() => handleLevelSelection('Sekolah')}
-                                style={{
-                                    backgroundColor: isRumahCompleted ? '#00ccff' : '#ccc',
-                                    border: 'none',
-                                    borderRadius: '10px',
-                                    padding: '10px 20px',
-                                    fontSize: '16px',
-                                    cursor: isRumahCompleted ? 'pointer' : 'not-allowed',
-                                    fontFamily: "'Comic Sans MS', cursive, sans-serif",
-                                    boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)',
-                                }}
-                                disabled={!isRumahCompleted}
-                            >
-                                Pilih Sekolah
+                                Play
                             </button>
                         </div>
                     </div>

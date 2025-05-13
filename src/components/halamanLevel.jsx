@@ -505,6 +505,19 @@ export default function HalamanLevel() {
                     </div>
                 </div>
             </Slider>
+            <div className='pt-8'>
+                <button 
+                    onClick={() => navigate('/')}
+                    className='bg-blue-500 hover:bg-blue-600 text-white px-6 py-3 rounded-full 
+                                shadow-lg transition-all duration-300 transform hover:scale-105
+                                font-comic-sans text-lg cursor-pointer'
+                    style={{
+                        fontFamily: "'Comic Sans MS', cursive, sans-serif",
+                    }}
+                >
+                    🏠 Kembali ke Menu Utama
+                </button>
+            </div>
         </div>
     );
 }

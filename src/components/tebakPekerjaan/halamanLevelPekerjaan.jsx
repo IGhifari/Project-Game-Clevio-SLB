@@ -247,6 +247,27 @@ export default function HalamanLevelPekerjaan() {
         </div>
       </div>
 
+      {/* Tombol kembali ke halaman utama level */}
+      <div style={{ display: "flex", justifyContent: "center", marginTop: 24 }}>
+        <button
+          onClick={() => navigate("/halamanlevel")}
+          style={{
+            background: "#ffd600",
+            border: "none",
+            borderRadius: 16,
+            padding: "14px 40px",
+            fontWeight: "bold",
+            fontSize: 20,
+            cursor: "pointer",
+            color: "#333",
+            boxShadow: "0 2px 8px rgba(0,0,0,0.08)",
+            transition: "background 0.2s",
+          }}
+        >
+          ⬅️ Kembali ke Halaman Level
+        </button>
+      </div>
+
       <style>
         {`
           .swal-title {

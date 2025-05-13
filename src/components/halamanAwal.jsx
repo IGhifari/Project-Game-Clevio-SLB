@@ -51,6 +51,8 @@ export default function HalamanAwal() {
         localStorage.removeItem('sekolahmain_completed');
         localStorage.removeItem('lapangansekolah_completed');
         localStorage.removeItem('perpustakaansekolah_completed');
+        localStorage.removeItem("pekerjaanLevelUnlocked"); // <-- tambahkan baris ini
+        window.location.reload(); // <-- tambahkan baris ini
 
         Swal.fire({
           title: 'Berhasil!',
@@ -154,9 +156,11 @@ export default function HalamanAwal() {
             animation: 'gradient 3s ease infinite',
           }}
         >
+
           🔄 Reset Progress
         </button>
       </div>
+      
 
       {/* CSS Animations */}
       <style>

@@ -329,14 +329,6 @@ const Level2 = () => {
             </div>
           </div>
         )}
-        <button
-          onClick={() => {
-            localStorage.removeItem("pekerjaanLevelUnlocked");
-            window.location.reload();
-          }}
-        >
-          Reset Progress
-        </button>
       </div>
     </div>
   );

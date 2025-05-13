@@ -264,7 +264,7 @@ export default function HalamanLevelPekerjaan() {
             transition: "background 0.2s",
           }}
         >
-          ⬅️ Kembali ke Halaman Level
+          ⬅️ Kembali
         </button>
       </div>
 

@@ -122,7 +122,7 @@ export default function LapanganSekolah() {
             <img 
                 src={bunga}
                 alt="bunga"
-                className="absolute cursor-pointer hover:scale-105 transition-transform"
+                className="absolute cursor-pointer transition-transform"
                 style={{
                     top: '41.2%',
                     left: '5%',
@@ -135,7 +135,7 @@ export default function LapanganSekolah() {
             <img 
                 src={basket}
                 alt="basket"
-                className="absolute cursor-pointer hover:scale-105 transition-transform"
+                className="absolute cursor-pointer transition-transform"
                 style={{
                     top: '79.2%',
                     left: '3.8%',
@@ -148,7 +148,7 @@ export default function LapanganSekolah() {
             <img 
                 src={ayunan}
                 alt="ayunan"
-                className="absolute cursor-pointer hover:scale-105 transition-transform"
+                className="absolute cursor-pointer transition-transform"
                 style={{
                     top: '37.4%',
                     left: '88.3%',

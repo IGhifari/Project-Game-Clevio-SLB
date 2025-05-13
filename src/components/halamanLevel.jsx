@@ -45,7 +45,7 @@ export default function HalamanLevel() {
         if (level === 'Di Rumah') {
             Swal.fire({
                 title: 'Level Dipilih!',
-                text: `Anda memilih level: ${level}`,
+                text: `Yeayy, Kamu memilih level: ${level}`,
                 icon: 'success',
                 confirmButtonText: 'Ayo Mulai!',
             }).then(() => {
@@ -54,7 +54,7 @@ export default function HalamanLevel() {
         } else if (level === 'Sekolah' && isRumahCompleted) {
             Swal.fire({
                 title: 'Level Dipilih!',
-                text: `Anda memilih level: ${level}`,
+                text: `Yeayy, kamu memilih level: ${level}`,
                 icon: 'success',
                 confirmButtonText: 'Ayo Mulai!',
             }).then(() => {

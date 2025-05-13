@@ -1,10 +1,12 @@
-import React from "react";
-import { useNavigate } from "react-router-dom";
 
-export default function ButtonKembaliPuzzle() {
+import React from "react"
+import { useNavigate } from "react-router-dom"
+
+
+export default function ButtonKembaliTemukanBenda () {
     const navigate = useNavigate();
 
-    return (
+    return(
         <button
             onClick={() => {
 
@@ -15,7 +17,7 @@ export default function ButtonKembaliPuzzle() {
             style={{
                 position: 'fixed',
                 top: '20px',
-                left: '20px',
+                left: '81%',
                 backgroundColor: '#81c784',
                 color: 'white',
                 border: 'none',
@@ -41,5 +43,5 @@ export default function ButtonKembaliPuzzle() {
         >
             🏠 Kembali ke halaman Level
         </button>
-    );
+    )
 }

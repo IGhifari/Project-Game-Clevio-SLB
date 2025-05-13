@@ -7,7 +7,7 @@ import jendelaKamarMandi from '../assets/object/kamarMandiRumah/jendelaKamarMand
 import CardObjectKamarMandi from './objectRumah/cardObjectKamarMandi';
 import KamarStar from './pointStar/rumahStar/kamarStar';
 import WaktuMain from './waktu/waktuMain';
-
+import ButtonKembaliTemukanBenda from './buttonKembali/buttonKembaliTemukanBenda';
 export default function KamarMandiRumah() {
     const [mission, setMission] = useState('');
     const [showObjectCard, setShowObjectCard] = useState(false);
@@ -46,13 +46,14 @@ export default function KamarMandiRumah() {
         Swal.fire({
             title: '<span style="font-family: Comic Sans MS">Misi di Kamar Mandi!</span>',
             html: `
-                <div style="font-family: Comic Sans MS">
-                    <p class="text-lg">🔍 Temukan benda-benda di kamar mandi:</p>
-                    <ul class="text-left mt-4 space-y-2">
-                        <li>1. Cari sikat gigi</li>
-                        <li>2. Temukan keset</li>
-                        <li>3. Cari jendela</li>
+                <div style="font-family: Comic Sans MS; font-size: 18px;">
+                    <p style="margin-bottom: 10px;">👀 Ayo cari benda-benda di kamar mandimu:</p>
+                    <ul style="text-align: left; margin-top: 20px;">
+                        <li>🪥 Cari sikat gigi</li>
+                        <li>🛁 Temukan keset</li>
+                        <li>🚪 Cari jendela</li>
                     </ul>
+                     <p style="margin-top: 20px;">🎯 Tekan benda jika kamu menemukannya!</p>
                 </div>
             `,
             icon: 'info',
@@ -117,11 +118,13 @@ export default function KamarMandiRumah() {
             {/* KamarStar component */}
             <KamarStar foundObjects={foundObjects} />
 
+            <ButtonKembaliTemukanBenda/>
+
             {/* Sikat Gigi */}
             <img
                 src={PastaGigi}
                 alt="Sikat Gigi"
-                className="absolute cursor-pointer transition-transform hover:scale-105"
+                className="absolute cursor-pointer transition-transform "
                 style={{
                     top: '47%',
                     left: '19.3%',
@@ -135,7 +138,7 @@ export default function KamarMandiRumah() {
             <img
                 src={kesetKamarMandi}
                 alt="Keset"
-                className="absolute cursor-pointer transition-transform hover:scale-105"
+                className="absolute cursor-pointer transition-transform "
                 style={{
                     top: '82%',
                     left: '37%',
@@ -149,7 +152,7 @@ export default function KamarMandiRumah() {
             <img
                 src={jendelaKamarMandi}
                 alt="Jendela"
-                className="absolute cursor-pointer transition-transform hover:scale-105"
+                className="absolute cursor-pointer transition-transform "
                 style={{
                     top: '7.1%',
                     left: '31.6%',

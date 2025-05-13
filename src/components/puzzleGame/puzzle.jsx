@@ -1,7 +1,8 @@
+// Tetap seperti sebelumnya
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
-import puzzleBg from '../../assets/background/puzzle.png'; // Gambar latar belakang puzzle
+import puzzleBg from '../../assets/background/puzzle.png';
 import ButtonKembaliPuzzle from '../buttonKembali/buttonKembaliPuzzle';
 
 export default function Puzzle() {
@@ -10,7 +11,7 @@ export default function Puzzle() {
     const [draggedPiece, setDraggedPiece] = useState(null);
     const [isCompleted, setIsCompleted] = useState(false);
     const navigate = useNavigate();
-    const puzzleSize = 2; // Ukuran puzzle 2x2
+    const puzzleSize = 2;
 
     const showStartGamePopup = () => {
         Swal.fire({
@@ -20,9 +21,9 @@ export default function Puzzle() {
                     <p>Susun potongan gambar dengan benar</p>
                     <p>Petunjuk:</p>
                     <ul style="text-align: left; margin-top: 10px;">
-                        <li>✨ Drag & Drop potongan puzzle</li>
-                        <li>✨ Lihat gambar asli sebagai panduan</li>
-                        <li>✨ Klik potongan untuk mengembalikan</li>
+                        <li>✨ Seret (drag) potongan ke tempatnya</li>
+                        <li>✨ Lihat gambar asli di sebelah kanan</li>
+                        <li>✨ Klik potongan untuk kembalikan</li>
                     </ul>
                 </div>
             `,
@@ -35,17 +36,14 @@ export default function Puzzle() {
         });
     };
 
-    // Inisialisasi puzzle
     useEffect(() => {
         showStartGamePopup();
 
-        // Buat 4 potongan puzzle (2x2)
         const newPieces = Array.from({ length: puzzleSize * puzzleSize }, (_, i) => ({
             id: i,
             correctPosition: i,
             currentPosition: null,
             image: puzzleBg,
-            // Perbaikan posisi background untuk setiap potongan
             backgroundPosition: `${(i % 2) * 100}% ${Math.floor(i / 2) * 100}%`,
         }));
 
@@ -75,23 +73,19 @@ export default function Puzzle() {
         e.preventDefault();
         if (!draggedPiece) return;
 
-        // Simpan potongan yang ada di slot target
         const targetSlot = slots.find(slot => slot.id === slotId);
         const existingPieceId = targetSlot?.pieceId;
 
-        // Update posisi potongan yang di-drag
         const updatedPieces = pieces.map(piece => {
             if (piece.id === draggedPiece.id) {
                 return { ...piece, currentPosition: slotId };
             }
-            // Jika ada potongan yang digeser, kembalikan ke area potongan
             if (piece.id === existingPieceId) {
                 return { ...piece, currentPosition: null };
             }
             return piece;
         });
 
-        // Update status slot
         const updatedSlots = slots.map(slot => {
             if (slot.id === slotId) {
                 return {
@@ -100,7 +94,6 @@ export default function Puzzle() {
                     pieceId: draggedPiece.id
                 };
             }
-            // Jika slot ini sebelumnya berisi potongan yang di-drag, kosongkan
             if (slot.pieceId === draggedPiece.id) {
                 return {
                     ...slot,
@@ -115,11 +108,8 @@ export default function Puzzle() {
         setSlots(updatedSlots);
         setDraggedPiece(null);
 
-        // Cek apakah semua potongan sudah di slot
         const allPiecesPlaced = updatedPieces.every(piece => piece.currentPosition !== null);
-        
         if (allPiecesPlaced) {
-            // Cek apakah semua potongan berada di posisi yang benar sesuai gambar asli
             const isPuzzleComplete = updatedPieces.every(piece => {
                 const slot = updatedSlots.find(s => s.pieceId === piece.id);
                 return slot && slot.id === piece.correctPosition;
@@ -129,7 +119,7 @@ export default function Puzzle() {
                 setIsCompleted(true);
                 Swal.fire({
                     title: 'Selamat!',
-                    text: 'Anda berhasil menyelesaikan puzzle!',
+                    text: 'Yeayy, kamu berhasil menyelesaikan puzzle!',
                     icon: 'success',
                     confirmButtonText: 'Lanjutkan',
                     background: '#fff',
@@ -177,7 +167,6 @@ export default function Puzzle() {
             position: 'relative',
             overflow: 'hidden'
         }}>
-            {/* Decorative elements */}
             <div className="puzzle-decorations">
                 {Array.from({ length: 20 }).map((_, i) => (
                     <div
@@ -215,14 +204,11 @@ export default function Puzzle() {
                 display: 'flex',
                 gap: '40px',
                 alignItems: 'flex-start',
+                flexWrap: 'wrap',
             }}>
                 {/* Area puzzle */}
-                <div style={{
-                    display: 'flex',
-                    flexDirection: 'column',
-                    gap: '20px',
-                }}>
-                    {/* Area potongan puzzle */}
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+                    {/* Potongan puzzle */}
                     <div style={{
                         display: 'grid',
                         gridTemplateColumns: 'repeat(2, 1fr)',
@@ -247,15 +233,13 @@ export default function Puzzle() {
                                         border: '2px solid #fff',
                                         borderRadius: '8px',
                                         cursor: 'move',
-                                        boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
-                                        transition: 'transform 0.2s',
                                     }}
                                 />
                             )
                         ))}
                     </div>
 
-                    {/* Area slot puzzle */}
+                    {/* Slot tempat menaruh potongan */}
                     <div style={{
                         display: 'grid',
                         gridTemplateColumns: 'repeat(2, 1fr)',
@@ -279,7 +263,6 @@ export default function Puzzle() {
                                     display: 'flex',
                                     justifyContent: 'center',
                                     alignItems: 'center',
-                                    position: 'relative',
                                 }}
                             >
                                 {slot.occupied && pieces.find(p => p.id === slot.pieceId) && (
@@ -303,48 +286,66 @@ export default function Puzzle() {
                     </div>
                 </div>
 
-                {/* Gambar referensi */}
+                {/* Area kanan: referensi + petunjuk */}
                 <div style={{
-                    background: 'rgba(255,255,255,0.9)',
-                    padding: '20px',
-                    borderRadius: '15px',
-                    boxShadow: '0 8px 16px rgba(0,0,0,0.1)',
                     display: 'flex',
                     flexDirection: 'column',
-                    alignItems: 'center',
-                    gap: '10px',
+                    gap: '20px',
                 }}>
-                    <h3 style={{
-                        color: '#81c784',
-                        fontSize: '1.5rem',
-                        fontFamily: 'Comic Sans MS, cursive',
-                        margin: '0',
-                    }}>
-                        Gambar Asli
-                    </h3>
+                    {/* Gambar referensi */}
                     <div style={{
-                        width: '300px',
-                        height: '300px',
-                        background: '#fff',
-                        padding: '2px',
-                        borderRadius: '8px',
-                        boxShadow: '0 4px 8px rgba(0,0,0,0.1)',
-                        overflow: 'hidden',
+                        background: 'rgba(255,255,255,0.9)',
+                        padding: '20px',
+                        borderRadius: '15px',
+                        boxShadow: '0 8px 16px rgba(0,0,0,0.1)',
+                        display: 'flex',
+                        flexDirection: 'column',
+                        alignItems: 'center',
                     }}>
+                        <h3 style={{
+                            color: '#81c784',
+                            fontSize: '1.5rem',
+                            fontFamily: 'Comic Sans MS, cursive',
+                        }}>
+                            Gambar Asli
+                        </h3>
                         <img 
                             src={puzzleBg} 
                             alt="Gambar Asli"
                             style={{
-                                width: '100%',
-                                height: '100%',
+                                width: '300px',
+                                height: '300px',
                                 objectFit: 'cover',
                                 borderRadius: '6px',
                             }}
                         />
                     </div>
+
+                    {/* Petunjuk Main */}
+                    <div style={{
+                        background: '#fff',
+                        padding: '15px 20px',
+                        borderRadius: '15px',
+                        fontFamily: 'Comic Sans MS, cursive',
+                        color: '#4caf50',
+                        fontSize: '1.1rem',
+                        boxShadow: '0 4px 10px rgba(0,0,0,0.1)',
+                        lineHeight: 1.8,
+                        maxWidth: '400px'
+                    }}>
+                        <h4 style={{ margin: 0, fontSize: '1.2rem', color: '#388e3c' }}>🧑‍🏫 Cara Bermain</h4>
+                        <ul style={{ paddingLeft: '20px', marginTop: '10px' }}>
+                            <li>👆 Klik dan tahan potongan gambar</li>
+                            <li>➡️ Geser ke kotak kosong</li>
+                            <li>🔍 Lihat gambar asli sebagai panduan</li>
+                            <li>🔄 Klik potongan untuk mengembalikan</li>
+                            <li>🎉 Susun semua agar jadi gambar utuh!</li>
+                        </ul>
+                    </div>
                 </div>
             </div>
 
+            {/* Animasi tambahan */}
             <style>
                 {`
                     @keyframes float {
@@ -354,42 +355,6 @@ export default function Puzzle() {
                     @keyframes bounce {
                         0%, 100% { transform: translateY(0); }
                         50% { transform: translateY(-10px); }
-                    }
-                    .puzzle-piece-decoration {
-                        pointer-events: none;
-                        z-index: 0;
-                    }
-                    .puzzle-piece:hover {
-                        transform: scale(1.05);
-                        box-shadow: 0 8px 16px rgba(0,0,0,0.2);
-                    }
-                    .puzzle-slot {
-                        transition: all 0.3s ease;
-                    }
-                    .puzzle-slot:hover {
-                        background-color: rgba(129,199,132,0.2);
-                    }
-                    .swal2-popup {
-                        font-family: 'Comic Sans MS', cursive;
-                        border-radius: 20px;
-                    }
-                    .swal2-title {
-                        color: #4caf50 !important;
-                    }
-                    .swal-title {
-                        font-family: "Comic Sans MS", cursive !important;
-                        font-size: 32px !important;
-                        color: #81c784 !important;
-                    }
-                    .swal-content {
-                        font-family: "Comic Sans MS", cursive !important;
-                        font-size: 20px !important;
-                    }
-                    .swal-confirm-button {
-                        font-family: "Comic Sans MS", cursive !important;
-                        font-size: 18px !important;
-                        padding: 10px 30px !important;
-                        background: #81c784 !important;
                     }
                 `}
             </style>

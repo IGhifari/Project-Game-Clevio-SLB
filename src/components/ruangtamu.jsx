@@ -7,7 +7,7 @@ import vas from '../assets/object/rumah/vas.png';
 import CardObjectruangtamu from './objectRumah/cardObjectKamar';
 import RuangTamuStar from './pointStar/rumahStar/ruangTamuStar';
 import WaktuMain from './waktu/waktuMain';
-
+import ButtonKembaliTemukanBenda from './buttonKembali/buttonKembaliTemukanBenda';
 export default function RuangTamuMain() {
     const [mission, setMission] = useState('');
     const [showObjectCard, setShowObjectCard] = useState(false);
@@ -24,15 +24,16 @@ export default function RuangTamuMain() {
     // Tampilkan misi saat pertama kali masuk
     useEffect(() => {
         Swal.fire({
-            title: '<span style="font-family: Comic Sans MS">📜 Misi Kamu Hari Ini!</span>',
+            title: '<span style="font-family: Comic Sans MS; font-size: 22px;">📜 Misi Kamu Hari Ini!</span>',
             html: `
                 <div style="font-family: Comic Sans MS">
-                    <p class="text-lg">Temukan benda-benda di ruang tamu:</p>
+                    <p class="text-lg">👀 Ayo cari benda-benda di ruang tamu:</p>
                     <ul class="text-left mt-4 space-y-2">
                         <li>🖼️ Cari foto</li>
                         <li>🪑 Temukan meja</li>
                         <li>🌸 Cari vas bunga</li>
                     </ul>
+                    <p style="margin-top: 20px;">🎯 Tekan benda jika kamu menemukannya!</p>
                 </div>
             `,
             icon: 'info',
@@ -101,7 +102,7 @@ export default function RuangTamuMain() {
                 </div>
             `,
             icon: 'success',
-            confirmButtonText: '🏆 Lihat Reward',
+            confirmButtonText: '🎁 Lihat Hadiah',
             confirmButtonColor: '#4CAF50'
         }).then((result) => {
             if (result.isConfirmed) {
@@ -124,11 +125,13 @@ export default function RuangTamuMain() {
 
             <RuangTamuStar foundObjects={foundObjects} />
 
+            <ButtonKembaliTemukanBenda/>
+
             {/* FOTO */}
             <img 
                 src={foto}
                 alt="foto"
-                className="absolute cursor-pointer transition-transform hover:scale-105"
+                className="absolute cursor-pointer transition-transform "
                 style={{ top: '22%', left: '6.1%', width: '130px' }}
                 onClick={() => handleObjectFound('🖼️ Foto')}
             />
@@ -137,7 +140,7 @@ export default function RuangTamuMain() {
             <img 
                 src={meja}
                 alt="meja"
-                className="absolute cursor-pointer transition-transform hover:scale-105"
+                className="absolute cursor-pointer transition-transform "
                 style={{ top: '79%', left: '40.7%', width: '300px' }}
                 onClick={() => handleObjectFound('🪑 Meja')}
             />
@@ -146,7 +149,7 @@ export default function RuangTamuMain() {
             <img 
                 src={vas}
                 alt="Vas"
-                className="absolute cursor-pointer transition-transform hover:scale-105"
+                className="absolute cursor-pointer transition-transform "
                 style={{ top: '63.5%', left: '87.9%', width: '186px' }}
                 onClick={() => handleObjectFound('🌸 Vas')}
             />

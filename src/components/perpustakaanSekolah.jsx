@@ -133,7 +133,7 @@ export default function PerpustakaanSekolah () {
             <img 
                 src={hurufA}
                 alt="hurufA"
-                className="absolute cursor-pointer hover:scale-105 transition-transform"
+                className="absolute cursor-pointer  transition-transform"
                 style={{
                     top: '%',
                     left: '44%',
@@ -146,7 +146,7 @@ export default function PerpustakaanSekolah () {
             <img 
                 src={Abjad}
                 alt="Abjad"
-                className="absolute cursor-pointer hover:scale-105 transition-transform"
+                className="absolute cursor-pointer  transition-transform"
                 style={{
                     top: '11.9%',
                     left: '79.5%',
@@ -159,7 +159,7 @@ export default function PerpustakaanSekolah () {
             <img 
                 src={Meja}
                 alt="meja"
-                className="absolute cursor-pointer hover:scale-105 transition-transform"
+                className="absolute cursor-pointer  transition-transform"
                 style={{
                     top: '75.5%',
                     left: '31.3%',

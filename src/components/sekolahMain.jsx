@@ -148,7 +148,7 @@ export default function SekolahMain() {
             <img
                 src={bukuClass}
                 alt="Buku"
-                className="absolute cursor-pointer hover:scale-105"
+                className="absolute cursor-pointer "
                 style={{
                     top: '51.8%',
                     left: '88.7%',

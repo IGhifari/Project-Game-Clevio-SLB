@@ -7,7 +7,7 @@ import bonekaBebek from '../assets/object/rumah/bonekaBebekRumah.png';
 import CardObjectKamar from './objectRumah/cardObjectKamar';
 import RumahStar from './pointStar/rumahStar/rumahStar';
 import WaktuMain from './waktu/waktuMain';
-
+import ButtonKembaliTemukanBenda from './buttonKembali/buttonKembaliTemukanBenda';
 export default function RumahMain() {
     const [mission, setMission] = useState('');
     const [showObjectCard, setShowObjectCard] = useState(false);
@@ -19,7 +19,7 @@ export default function RumahMain() {
     const objectData = [
         { name: '🟡 Bantal', image: bantalRumah },
         { name: '💡 Lampu Tidur', image: lampuTidur },
-        { name: '🧸 Boneka Bebek', image: bonekaBebek },
+        { name: '🧸 Boneka', image: bonekaBebek },
     ];
 
     const handleObjectFound = (objectName) => {
@@ -120,16 +120,17 @@ export default function RumahMain() {
         >
             <WaktuMain timeLeft={timeLeft} totalTime={30} />
             <RumahStar foundObjects={foundObjects} />
+            <ButtonKembaliTemukanBenda/>
 
-            <img src={bantalRumah} alt="Bantal" className="absolute cursor-pointer hover:scale-105"
+            <img src={bantalRumah} alt="Bantal" className="absolute cursor-pointer "
                 style={{ top: '71%', left: '72.5%', width: '310px' }}
                 onClick={() => handleObjectFound('🟡 Bantal')} />
-            <img src={lampuTidur} alt="Lampu Tidur" className="absolute cursor-pointer hover:scale-105"
+            <img src={lampuTidur} alt="Lampu Tidur" className="absolute cursor-pointer "
                 style={{ top: '34.5%', left: '85%', width: '160px' }}
                 onClick={() => handleObjectFound('💡 Lampu Tidur')} />
-            <img src={bonekaBebek} alt="Boneka Bebek" className="absolute cursor-pointer hover:scale-105"
+            <img src={bonekaBebek} alt="Boneka Bebek" className="absolute cursor-pointer "
                 style={{ top: '10.3%', left: '46.6%', width: '85px' }}
-                onClick={() => handleObjectFound('🧸 Boneka Bebek')} />
+                onClick={() => handleObjectFound('🧸 Boneka')} />
 
             <button onClick={() => setShowObjectCard(true)}
                 className="fixed bottom-4 right-4 bg-blue-500 text-white px-4 py-2 rounded-full shadow-lg hover:bg-blue-600">

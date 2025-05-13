@@ -5,7 +5,7 @@ import bgLevel from "../../../assets/background/levelb.png";
 import imgPolisi from "../../../assets/object/pekerjaan/petani.png";
 import imgChef from "../../../assets/object/pekerjaan/astronot.png";
 import imgPilot from "../../../assets/object/pekerjaan/pilot.png";
-
+import ButtonKembaliStage2 from "../../buttonKembali/buttonKembaliStage2";
 const cards = [
   {
     id: 1,
@@ -82,6 +82,7 @@ export default function Level3() {
         alignItems: "center",
       }}
     >
+      <ButtonKembaliStage2/>
       <div
         style={{
           background: "rgba(255,255,255,0.92)",
@@ -91,7 +92,7 @@ export default function Level3() {
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
-          marginTop: 40,
+          marginTop: 90,
           maxWidth: 900,
           width: "90vw",
           minHeight: 500,

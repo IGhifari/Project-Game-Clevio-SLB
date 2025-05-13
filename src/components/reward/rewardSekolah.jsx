@@ -83,16 +83,16 @@ export default function RewardSekolah() {
                     <div className="flex justify-center gap-4 mt-6">
                         <button
                             onClick={() => navigate('/halamanlevel')}
-                            className="px-6 py-2 bg-blue-400 hover:bg-blue-500 text-white rounded-full transition-all text-lg"
+                            className="px-6 py-2 bg-blue-400 cursor-pointer hover:bg-blue-500 text-white rounded-full transition-all"
                         >
                             🔙 Kembali
                         </button>
                         {allCompleted && (
                             <button
-                                onClick={() => navigate('/halamanlevel')}
-                                className="px-6 py-2 bg-green-500 hover:bg-green-600 text-white rounded-full transition-all text-lg"
+                                onClick={() => navigate('/halamanLevelPekerjaan')}
+                                className="px-6 py-2 bg-green-500 cursor-pointer hover:bg-green-600 text-white rounded-full transition-all "
                             >
-                                🎮 Main Lagi
+                                🎮 Lanjut ke game berikutnya
                             </button>
                         )}
                     </div>

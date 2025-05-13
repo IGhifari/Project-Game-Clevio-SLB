@@ -5,7 +5,7 @@ import bgLevel from "../../../assets/background/levelb.png";
 import imgMog from "../../../assets/object/pekerjaan/guru.png";
 import imgLtoo from "../../../assets/object/pekerjaan/petani.png";
 import imgAtou from "../../../assets/object/pekerjaan/dokter.png";
-
+import ButtonKembaliStage2 from "../../buttonKembali/buttonKembaliStage2";
 const cards = [
   {
     id: 1,
@@ -81,6 +81,7 @@ export default function Level4() {
         alignItems: "center",
       }}
     >
+      <ButtonKembaliStage2/>
       <div
         style={{
           background: "rgba(255,255,255,0.92)",
@@ -90,7 +91,7 @@ export default function Level4() {
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
-          marginTop: 40,
+          marginTop: 90,
           maxWidth: 900,
           width: "90vw",
           minHeight: 500,

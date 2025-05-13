@@ -10,7 +10,10 @@ export default function Puzzle3() {
     const [draggedPiece, setDraggedPiece] = useState(null);
     const [isCompleted, setIsCompleted] = useState(false);
     const navigate = useNavigate();
-    const puzzleSize = 2;
+
+    const puzzleCols = 4; // 4 kolom
+    const puzzleRows = 2; // 2 baris
+    const totalPieces = puzzleCols * puzzleRows;
 
     const showStartGamePopup = () => {
         Swal.fire({
@@ -37,18 +40,19 @@ export default function Puzzle3() {
 
     useEffect(() => {
         showStartGamePopup();
-        const newPieces = Array.from({ length: puzzleSize * puzzleSize }, (_, i) => ({
+
+        const newPieces = Array.from({ length: totalPieces }, (_, i) => ({
             id: i,
             correctPosition: i,
             currentPosition: null,
             image: puzzleBg3,
-            backgroundPosition: `${(i % 2) * 100}% ${Math.floor(i / 2) * 100}%`,
+            backgroundPosition: `${(i % puzzleCols) * (100 / (puzzleCols - 1))}% ${Math.floor(i / puzzleCols) * (100 / (puzzleRows - 1))}%`,
         }));
 
         const shuffledPieces = [...newPieces].sort(() => Math.random() - 0.5);
         setPieces(shuffledPieces);
 
-        const newSlots = Array.from({ length: puzzleSize * puzzleSize }, (_, i) => ({
+        const newSlots = Array.from({ length: totalPieces }, (_, i) => ({
             id: i,
             occupied: false,
             pieceId: null
@@ -107,7 +111,7 @@ export default function Puzzle3() {
         setDraggedPiece(null);
 
         const allPiecesPlaced = updatedPieces.every(piece => piece.currentPosition !== null);
-        
+
         if (allPiecesPlaced) {
             const isPuzzleComplete = updatedPieces.every(piece => {
                 const slot = updatedSlots.find(s => s.pieceId === piece.id);
@@ -118,7 +122,7 @@ export default function Puzzle3() {
                 setIsCompleted(true);
                 Swal.fire({
                     title: 'Selamat!',
-                    text: 'Anda berhasil menyelesaikan puzzle!',
+                    text: 'Yeayy, kamu berhasil menyelesaikan puzzle!',
                     icon: 'success',
                     confirmButtonText: 'Lanjutkan',
                     background: '#fff',
@@ -166,26 +170,6 @@ export default function Puzzle3() {
             position: 'relative',
             overflow: 'hidden'
         }}>
-            <div className="puzzle-decorations">
-                {Array.from({ length: 20 }).map((_, i) => (
-                    <div
-                        key={i}
-                        className="puzzle-piece-decoration"
-                        style={{
-                            position: 'absolute',
-                            top: `${Math.random() * 100}%`,
-                            left: `${Math.random() * 100}%`,
-                            width: '30px',
-                            height: '30px',
-                            background: 'rgba(255, 255, 255, 0.1)',
-                            transform: `rotate(${Math.random() * 360}deg)`,
-                            borderRadius: '5px',
-                            animation: `float ${5 + Math.random() * 5}s infinite ease-in-out`
-                        }}
-                    />
-                ))}
-            </div>
-
             <ButtonKembaliPuzzle />
 
             <h1 style={{
@@ -199,19 +183,12 @@ export default function Puzzle3() {
                 🧩 Level Final Puzzle
             </h1>
 
-            <div style={{
-                display: 'flex',
-                gap: '40px',
-                alignItems: 'flex-start',
-            }}>
-                <div style={{
-                    display: 'flex',
-                    flexDirection: 'column',
-                    gap: '20px',
-                }}>
+            <div style={{ display: 'flex', gap: '40px', alignItems: 'flex-start' }}>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+                    {/* Pieces area */}
                     <div style={{
                         display: 'grid',
-                        gridTemplateColumns: 'repeat(2, 1fr)',
+                        gridTemplateColumns: `repeat(${puzzleCols}, 1fr)`,
                         gap: '10px',
                         padding: '20px',
                         background: 'rgba(255,255,255,0.9)',
@@ -225,25 +202,24 @@ export default function Puzzle3() {
                                     draggable
                                     onDragStart={(e) => handleDragStart(e, piece)}
                                     style={{
-                                        width: '150px',
-                                        height: '150px',
+                                        width: '100px',
+                                        height: '100px',
                                         backgroundImage: `url(${piece.image})`,
-                                        backgroundSize: '200% 200%',
+                                        backgroundSize: '400% 200%',
                                         backgroundPosition: piece.backgroundPosition,
                                         border: '2px solid #fff',
                                         borderRadius: '8px',
                                         cursor: 'move',
-                                        boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
-                                        transition: 'transform 0.2s',
                                     }}
                                 />
                             )
                         ))}
                     </div>
 
+                    {/* Slots area */}
                     <div style={{
                         display: 'grid',
-                        gridTemplateColumns: 'repeat(2, 1fr)',
+                        gridTemplateColumns: `repeat(${puzzleCols}, 1fr)`,
                         gap: '10px',
                         padding: '20px',
                         background: 'rgba(255,255,255,0.9)',
@@ -256,15 +232,14 @@ export default function Puzzle3() {
                                 onDragOver={handleDragOver}
                                 onDrop={(e) => handleDrop(e, slot.id)}
                                 style={{
-                                    width: '150px',
-                                    height: '150px',
+                                    width: '100px',
+                                    height: '100px',
                                     border: '2px dashed #81c784',
                                     borderRadius: '8px',
                                     backgroundColor: slot.occupied ? 'transparent' : 'rgba(129,199,132,0.1)',
                                     display: 'flex',
                                     justifyContent: 'center',
                                     alignItems: 'center',
-                                    position: 'relative',
                                 }}
                             >
                                 {slot.occupied && pieces.find(p => p.id === slot.pieceId) && (
@@ -276,7 +251,7 @@ export default function Puzzle3() {
                                             width: '100%',
                                             height: '100%',
                                             backgroundImage: `url(${pieces.find(p => p.id === slot.pieceId).image})`,
-                                            backgroundSize: '200% 200%',
+                                            backgroundSize: '400% 200%',
                                             backgroundPosition: pieces.find(p => p.id === slot.pieceId).backgroundPosition,
                                             borderRadius: '6px',
                                             cursor: 'move',
@@ -288,77 +263,86 @@ export default function Puzzle3() {
                     </div>
                 </div>
 
-                <div style={{
-                    background: 'rgba(255,255,255,0.9)',
-                    padding: '20px',
-                    borderRadius: '15px',
-                    boxShadow: '0 8px 16px rgba(0,0,0,0.1)',
-                    display: 'flex',
-                    flexDirection: 'column',
-                    alignItems: 'center',
-                    gap: '10px',
-                }}>
-                    <h3 style={{
-                        color: '#81c784',
-                        fontSize: '1.5rem',
-                        fontFamily: 'Comic Sans MS, cursive',
-                        margin: '0',
-                    }}>
-                        Gambar Asli
-                    </h3>
+                {/* Right side panel */}
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
                     <div style={{
-                        width: '300px',
-                        height: '300px',
-                        background: '#fff',
-                        padding: '2px',
-                        borderRadius: '8px',
-                        boxShadow: '0 4px 8px rgba(0,0,0,0.1)',
-                        overflow: 'hidden',
+                        background: 'rgba(255,255,255,0.9)',
+                        padding: '20px',
+                        borderRadius: '15px',
+                        boxShadow: '0 8px 16px rgba(0,0,0,0.1)',
+                        display: 'flex',
+                        flexDirection: 'column',
+                        alignItems: 'center',
                     }}>
-                        <img 
-                            src={puzzleBg3} 
+                        <h3 style={{ color: '#81c784', fontSize: '1.5rem', fontFamily: 'Comic Sans MS, cursive' }}>Gambar Asli</h3>
+                        <img
+                            src={puzzleBg3}
                             alt="Gambar Asli"
                             style={{
-                                width: '100%',
-                                height: '100%',
+                                width: '300px',
+                                height: '150px',
                                 objectFit: 'cover',
                                 borderRadius: '6px',
                             }}
                         />
+                    </div>
+
+                    <div style={{
+                        background: '#fff',
+                        padding: '15px 20px',
+                        borderRadius: '15px',
+                        fontFamily: 'Comic Sans MS, cursive',
+                        color: '#4caf50',
+                        fontSize: '1.1rem',
+                        boxShadow: '0 4px 10px rgba(0,0,0,0.1)',
+                        lineHeight: 1.8,
+                        maxWidth: '400px'
+                    }}>
+                        <h4 style={{ margin: 0, fontSize: '1.2rem', color: '#388e3c' }}>🧑‍🏫 Cara Bermain</h4>
+                        <ul style={{ paddingLeft: '20px', marginTop: '10px' }}>
+                            <li>👆 Klik dan tahan potongan gambar</li>
+                            <li>➡️ Geser ke kotak kosong</li>
+                            <li>🔍 Lihat gambar asli sebagai panduan</li>
+                            <li>🔄 Klik potongan untuk mengembalikan</li>
+                            <li>🎉 Susun semua agar jadi gambar utuh!</li>
+                        </ul>
+                    </div>
+                <div style={{ marginTop: '20px' }}>
+                        <button
+                            className="cursor-pointer"
+                            style={{
+                                padding: '12px 24px',
+                                fontSize: '1rem',
+                                backgroundColor: '#81c784',
+                                color: '#fff',
+                                border: 'none',
+                                borderRadius: '8px',
+                                boxShadow: '0 4px 8px rgba(0,0,0,0.1)',
+                                fontFamily: 'Comic Sans MS, cursive',
+                                transition: 'all 0.3s ease',
+                                cursor: 'pointer'
+                            }}
+                            onClick={() => navigate('/puzzlegame2')}
+                            onMouseOver={(e) => {
+                                e.currentTarget.style.backgroundColor = '#66bb6a';
+                                e.currentTarget.style.transform = 'scale(1.05)';
+                            }}
+                            onMouseOut={(e) => {
+                                e.currentTarget.style.backgroundColor = '#81c784';
+                                e.currentTarget.style.transform = 'scale(1)';
+                            }}
+                        >
+                            ⬅️ Kembali ke Level Sebelumnya
+                        </button>
                     </div>
                 </div>
             </div>
 
             <style>
                 {`
-                    @keyframes float {
-                        0%, 100% { transform: translateY(0) rotate(0deg); }
-                        50% { transform: translateY(-20px) rotate(180deg); }
-                    }
                     @keyframes bounce {
                         0%, 100% { transform: translateY(0); }
                         50% { transform: translateY(-10px); }
-                    }
-                    .puzzle-piece-decoration {
-                        pointer-events: none;
-                        z-index: 0;
-                    }
-                    .puzzle-piece:hover {
-                        transform: scale(1.05);
-                        box-shadow: 0 8px 16px rgba(0,0,0,0.2);
-                    }
-                    .puzzle-slot {
-                        transition: all 0.3s ease;
-                    }
-                    .puzzle-slot:hover {
-                        background-color: rgba(129,199,132,0.2);
-                    }
-                    .swal2-popup {
-                        font-family: 'Comic Sans MS', cursive;
-                        border-radius: 20px;
-                    }
-                    .swal2-title {
-                        color: #4caf50 !important;
                     }
                 `}
             </style>

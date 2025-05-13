@@ -4,8 +4,8 @@ import React, { useState, useEffect } from "react";
 import bgLevel from "../../../assets/background/levelb.png";
 import imgPemadam from "../../../assets/object/pekerjaan/pemadam.png";
 import imgPetani from "../../../assets/object/pekerjaan/petani.png";
-import imgPerawat from "../../../assets/object/pekerjaan/perawat.png";
-
+import imgPolisi from "../../../assets/object/pekerjaan/polisi.png";
+import ButtonKembaliStage2 from "../../buttonKembali/buttonKembaliStage2";
 const cards = [
   {
     id: 1,
@@ -19,8 +19,8 @@ const cards = [
   },
   {
     id: 3,
-    img: imgPerawat,
-    name: "Perawat",
+    img: imgPolisi,
+    name: "Polisi",
   },
 ];
 
@@ -81,6 +81,7 @@ export default function Level6() {
         alignItems: "center",
       }}
     >
+      <ButtonKembaliStage2/>
       <div
         style={{
           background: "rgba(255,255,255,0.92)",
@@ -90,13 +91,14 @@ export default function Level6() {
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
-          marginTop: 40,
+          marginTop: 90,
           maxWidth: 900,
           width: "90vw",
           minHeight: 500,
           justifyContent: "center",
         }}
       >
+        
         {/* Timer */}
         {!result && (
           <div

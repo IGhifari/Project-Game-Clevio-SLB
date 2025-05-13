@@ -5,7 +5,7 @@ import bgLevel from "../../../assets/background/levelb.png";
 import imgPemadam from "../../../assets/object/pekerjaan/pemadam.png";
 import imgPetani from "../../../assets/object/pekerjaan/petani.png";
 import imgPerawat from "../../../assets/object/pekerjaan/perawat.png";
-
+import ButtonKembaliStage2 from "../../buttonKembali/buttonKembaliStage2";
 const cards = [
   {
     id: 1,
@@ -41,7 +41,7 @@ export default function Level6() {
   }, [result, timeLeft]);
 
   const handleChoose = (card) => {
-    if (card.name === "Pemadam") {
+    if (card.name === "Perawat") {
       setResult("benar");
       // Unlock level 7
       localStorage.setItem(
@@ -81,6 +81,7 @@ export default function Level6() {
         alignItems: "center",
       }}
     >
+      <ButtonKembaliStage2/>
       <div
         style={{
           background: "rgba(255,255,255,0.92)",
@@ -90,7 +91,7 @@ export default function Level6() {
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
-          marginTop: 40,
+          marginTop: 90,
           maxWidth: 900,
           width: "90vw",
           minHeight: 500,
@@ -129,7 +130,7 @@ export default function Level6() {
                 textAlign: "center",
               }}
             >
-              Manakah yang pemadam?
+              Manakah yang perawat?
             </div>
             <div
               className="cards-container"

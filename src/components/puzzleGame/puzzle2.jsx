@@ -117,7 +117,7 @@ export default function Puzzle2() {
                 setIsCompleted(true);
                 Swal.fire({
                     title: 'Selamat!',
-                    text: 'Anda berhasil menyelesaikan puzzle!',
+                    text: 'Yeayy, kamu berhasil menyelesaikan puzzle!',
                     icon: 'success',
                     confirmButtonText: 'Lanjutkan',
                     background: '#fff',
@@ -289,43 +289,89 @@ export default function Puzzle2() {
                 </div>
 
                 <div style={{
-                    background: 'rgba(255,255,255,0.9)',
-                    padding: '20px',
-                    borderRadius: '15px',
-                    boxShadow: '0 8px 16px rgba(0,0,0,0.1)',
                     display: 'flex',
                     flexDirection: 'column',
-                    alignItems: 'center',
-                    gap: '10px',
+                    gap: '20px',
                 }}>
-                    <h3 style={{
-                        color: '#81c784',
-                        fontSize: '1.5rem',
-                        fontFamily: 'Comic Sans MS, cursive',
-                        margin: '0',
-                    }}>
-                        Gambar Asli
-                    </h3>
+                    {/* Gambar referensi */}
                     <div style={{
-                        width: '300px',
-                        height: '300px',
-                        background: '#fff',
-                        padding: '2px',
-                        borderRadius: '8px',
-                        boxShadow: '0 4px 8px rgba(0,0,0,0.1)',
-                        overflow: 'hidden',
+                        background: 'rgba(255,255,255,0.9)',
+                        padding: '20px',
+                        borderRadius: '15px',
+                        boxShadow: '0 8px 16px rgba(0,0,0,0.1)',
+                        display: 'flex',
+                        flexDirection: 'column',
+                        alignItems: 'center',
                     }}>
+                        <h3 style={{
+                            color: '#81c784',
+                            fontSize: '1.5rem',
+                            fontFamily: 'Comic Sans MS, cursive',
+                        }}>
+                            Gambar Asli
+                        </h3>
                         <img 
                             src={puzzleBg2} 
                             alt="Gambar Asli"
                             style={{
-                                width: '100%',
-                                height: '100%',
+                                width: '300px',
+                                height: '300px',
                                 objectFit: 'cover',
                                 borderRadius: '6px',
                             }}
                         />
                     </div>
+
+                    {/* Petunjuk Main */}
+                    <div style={{
+                        background: '#fff',
+                        padding: '15px 20px',
+                        borderRadius: '15px',
+                        fontFamily: 'Comic Sans MS, cursive',
+                        color: '#4caf50',
+                        fontSize: '1.1rem',
+                        boxShadow: '0 4px 10px rgba(0,0,0,0.1)',
+                        lineHeight: 1.8,
+                        maxWidth: '400px'
+                    }}>
+                        <h4 style={{ margin: 0, fontSize: '1.2rem', color: '#388e3c' }}>🧑‍🏫 Cara Bermain</h4>
+                        <ul style={{ paddingLeft: '20px', marginTop: '10px' }}>
+                            <li>👆 Klik dan tahan potongan gambar</li>
+                            <li>➡️ Geser ke kotak kosong</li>
+                            <li>🔍 Lihat gambar asli sebagai panduan</li>
+                            <li>🔄 Klik potongan untuk mengembalikan</li>
+                            <li>🎉 Susun semua agar jadi gambar utuh!</li>
+                        </ul>
+                    </div>
+                    <div style={{ marginTop: '20px' }}>
+                        <button
+                            className="cursor-pointer"
+                            style={{
+                                padding: '12px 24px',
+                                fontSize: '1rem',
+                                backgroundColor: '#81c784',
+                                color: '#fff',
+                                border: 'none',
+                                borderRadius: '8px',
+                                boxShadow: '0 4px 8px rgba(0,0,0,0.1)',
+                                fontFamily: 'Comic Sans MS, cursive',
+                                transition: 'all 0.3s ease',
+                                cursor: 'pointer'
+                            }}
+                            onClick={() => navigate('/puzzlegame')}
+                            onMouseOver={(e) => {
+                                e.currentTarget.style.backgroundColor = '#66bb6a';
+                                e.currentTarget.style.transform = 'scale(1.05)';
+                            }}
+                            onMouseOut={(e) => {
+                                e.currentTarget.style.backgroundColor = '#81c784';
+                                e.currentTarget.style.transform = 'scale(1)';
+                            }}
+                        >
+                            ⬅️ Kembali ke Level Sebelumnya
+                        </button>
+                    </div>
+
                 </div>
             </div>
 

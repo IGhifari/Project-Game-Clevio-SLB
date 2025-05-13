@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import puzzleBg from '../../assets/background/puzzle.png'; // Gambar latar belakang puzzle
+import ButtonKembaliPuzzle from '../buttonKembali/buttonKembaliPuzzle';
 
 export default function Puzzle() {
     const [pieces, setPieces] = useState([]);
@@ -11,8 +12,33 @@ export default function Puzzle() {
     const navigate = useNavigate();
     const puzzleSize = 2; // Ukuran puzzle 2x2
 
+    const showStartGamePopup = () => {
+        Swal.fire({
+            title: '🧩 Mari Bermain Puzzle!',
+            html: `
+                <div style="font-family: 'Comic Sans MS'">
+                    <p>Susun potongan gambar dengan benar</p>
+                    <p>Petunjuk:</p>
+                    <ul style="text-align: left; margin-top: 10px;">
+                        <li>✨ Drag & Drop potongan puzzle</li>
+                        <li>✨ Lihat gambar asli sebagai panduan</li>
+                        <li>✨ Klik potongan untuk mengembalikan</li>
+                    </ul>
+                </div>
+            `,
+            confirmButtonText: '🎮 Mulai Main!',
+            confirmButtonColor: '#81c784',
+            background: '#fff3e0',
+            showClass: {
+                popup: 'animate__animated animate__bounceIn'
+            }
+        });
+    };
+
     // Inisialisasi puzzle
     useEffect(() => {
+        showStartGamePopup();
+
         // Buat 4 potongan puzzle (2x2)
         const newPieces = Array.from({ length: puzzleSize * puzzleSize }, (_, i) => ({
             id: i,
@@ -142,21 +168,47 @@ export default function Puzzle() {
 
     return (
         <div style={{
-            background: 'linear-gradient(135deg, #a5d6a7 0%, #81c784 100%)',
+            background: 'linear-gradient(135deg, #81c784 0%, #4caf50 100%)',
             minHeight: '100vh',
             padding: '40px',
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
+            position: 'relative',
+            overflow: 'hidden'
         }}>
+            {/* Decorative elements */}
+            <div className="puzzle-decorations">
+                {Array.from({ length: 20 }).map((_, i) => (
+                    <div
+                        key={i}
+                        className="puzzle-piece-decoration"
+                        style={{
+                            position: 'absolute',
+                            top: `${Math.random() * 100}%`,
+                            left: `${Math.random() * 100}%`,
+                            width: '30px',
+                            height: '30px',
+                            background: 'rgba(255, 255, 255, 0.1)',
+                            transform: `rotate(${Math.random() * 360}deg)`,
+                            borderRadius: '5px',
+                            animation: `float ${5 + Math.random() * 5}s infinite ease-in-out`
+                        }}
+                    />
+                ))}
+            </div>
+
+            <ButtonKembaliPuzzle />
+
             <h1 style={{
                 color: '#fff',
-                fontSize: '2.5rem',
+                fontSize: '3rem',
                 textShadow: '2px 2px 4px rgba(0,0,0,0.3)',
                 marginBottom: '40px',
                 fontFamily: 'Comic Sans MS, cursive',
+                animation: 'bounce 2s infinite'
             }}>
-                Puzzle Game
+                🧩 Mini Puzzle Game
             </h1>
 
             <div style={{
@@ -295,6 +347,35 @@ export default function Puzzle() {
 
             <style>
                 {`
+                    @keyframes float {
+                        0%, 100% { transform: translateY(0) rotate(0deg); }
+                        50% { transform: translateY(-20px) rotate(180deg); }
+                    }
+                    @keyframes bounce {
+                        0%, 100% { transform: translateY(0); }
+                        50% { transform: translateY(-10px); }
+                    }
+                    .puzzle-piece-decoration {
+                        pointer-events: none;
+                        z-index: 0;
+                    }
+                    .puzzle-piece:hover {
+                        transform: scale(1.05);
+                        box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+                    }
+                    .puzzle-slot {
+                        transition: all 0.3s ease;
+                    }
+                    .puzzle-slot:hover {
+                        background-color: rgba(129,199,132,0.2);
+                    }
+                    .swal2-popup {
+                        font-family: 'Comic Sans MS', cursive;
+                        border-radius: 20px;
+                    }
+                    .swal2-title {
+                        color: #4caf50 !important;
+                    }
                     .swal-title {
                         font-family: "Comic Sans MS", cursive !important;
                         font-size: 32px !important;

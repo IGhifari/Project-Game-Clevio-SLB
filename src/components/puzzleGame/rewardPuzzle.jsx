@@ -1,9 +1,28 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
+import confetti from 'canvas-confetti'; // Opsional: efek visual
 
 export default function RewardPuzzle() {
     const navigate = useNavigate();
+
+    const handleClick = () => {
+        confetti(); // Efek visual konfeti (tidak bersuara)
+        Swal.fire({
+            title: 'Terima Kasih!',
+            text: 'Kamu luar biasa! Terima kasih sudah menyelesaikan puzzle ini.',
+            icon: 'success',
+            confirmButtonText: 'Kembali ke Menu',
+            background: '#fff',
+            customClass: {
+                title: 'swal-title',
+                content: 'swal-content',
+                confirmButton: 'swal-confirm-button'
+            }
+        }).then(() => {
+            navigate('/halamanlevel');
+        });
+    };
 
     return (
         <div style={{
@@ -24,23 +43,29 @@ export default function RewardPuzzle() {
                 maxWidth: '600px',
                 width: '90%',
             }}>
+                <div style={{
+                    fontSize: '4rem',
+                    marginBottom: '10px',
+                }}>
+                    🏆🎉✨
+                </div>
+
                 <h1 style={{
-                    color: '#81c784',
+                    color: '#388e3c',
                     fontSize: '2.5rem',
-                    textShadow: '2px 2px 4px rgba(0,0,0,0.1)',
                     marginBottom: '20px',
                     fontFamily: 'Comic Sans MS, cursive',
                 }}>
-                    Selamat! 🎉
+                    Selamat!
                 </h1>
 
                 <div style={{
-                    fontSize: '1.5rem',
+                    fontSize: '1.4rem',
                     color: '#2e7d32',
                     marginBottom: '30px',
                     fontFamily: 'Comic Sans MS, cursive',
                 }}>
-                    Anda telah menyelesaikan semua level puzzle!
+                    Kamu telah menyelesaikan semua level puzzle!
                 </div>
 
                 <div style={{
@@ -51,59 +76,29 @@ export default function RewardPuzzle() {
                 }}>
                     <h2 style={{
                         color: '#2e7d32',
-                        fontSize: '1.8rem',
+                        fontSize: '1.6rem',
                         marginBottom: '15px',
                         fontFamily: 'Comic Sans MS, cursive',
                     }}>
-                        Penghargaan Anda
+                        Penghargaanmu:
                     </h2>
                     <div style={{
                         display: 'flex',
                         flexDirection: 'column',
                         gap: '15px',
                         alignItems: 'center',
+                        fontFamily: 'Comic Sans MS, cursive',
+                        fontSize: '1.3rem',
+                        color: '#1b5e20',
                     }}>
-                        <div style={{
-                            fontSize: '1.2rem',
-                            color: '#1b5e20',
-                            fontFamily: 'Comic Sans MS, cursive',
-                        }}>
-                            🏆 Puzzle Master
-                        </div>
-                        <div style={{
-                            fontSize: '1.2rem',
-                            color: '#1b5e20',
-                            fontFamily: 'Comic Sans MS, cursive',
-                        }}>
-                            ⭐ Problem Solver
-                        </div>
-                        <div style={{
-                            fontSize: '1.2rem',
-                            color: '#1b5e20',
-                            fontFamily: 'Comic Sans MS, cursive',
-                        }}>
-                            🎯 Pattern Recognition Expert
-                        </div>
+                        <div>🏅 Puzzle Master</div>
+                        <div>⭐ Problem Solver</div>
+                        <div>🎯 Pattern Expert</div>
                     </div>
                 </div>
 
                 <button
-                    onClick={() => {
-                        Swal.fire({
-                            title: 'Terima Kasih!',
-                            text: 'Terima kasih telah bermain puzzle game kami!',
-                            icon: 'success',
-                            confirmButtonText: 'Kembali ke Menu',
-                            background: '#fff',
-                            customClass: {
-                                title: 'swal-title',
-                                content: 'swal-content',
-                                confirmButton: 'swal-confirm-button'
-                            }
-                        }).then(() => {
-                            navigate('/halamanlevel');
-                        });
-                    }}
+                    onClick={handleClick}
                     style={{
                         background: '#81c784',
                         color: 'white',
@@ -114,10 +109,6 @@ export default function RewardPuzzle() {
                         cursor: 'pointer',
                         fontFamily: 'Comic Sans MS, cursive',
                         transition: 'transform 0.2s, background-color 0.2s',
-                        ':hover': {
-                            background: '#66bb6a',
-                            transform: 'scale(1.05)',
-                        }
                     }}
                 >
                     Kembali ke Menu

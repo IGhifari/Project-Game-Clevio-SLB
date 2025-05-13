@@ -11,3 +11,21 @@
 }
 
 
+.puzzle-container {
+    perspective: 1000px;
+}
+
+.puzzle-piece {
+    backface-visibility: hidden;
+    transition: all 0.3s ease;
+}
+
+.puzzle-complete {
+    animation: confetti 1s ease-out forwards;
+}
+
+@keyframes confetti {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.2); }
+    100% { transform: scale(1); }
+}

@@ -17,9 +17,9 @@ export default function PerpustakaanSekolah () {
     const [isGameOver, setIsGameOver] = useState(false);
 
     const objectData = [
-        { name: 'Meja', image: Meja },
-        { name: 'Abjad', image: Abjad },
-        { name: 'Huruf A', image: hurufA },
+        { name: '🪑 Meja', image: Meja },
+        { name: '🔡 Abjad', image: Abjad },
+        { name: '🅰️ Huruf A', image: hurufA },
     ];
 
     const handleObjectFound = (objectName) => {
@@ -48,11 +48,11 @@ export default function PerpustakaanSekolah () {
             title: '<span style="font-family: Comic Sans MS; font-size: 22px;">📜 Misi Kamu Hari Ini!</span>',
             html: `
                 <div style="font-family: Comic Sans MS; font-size: 18px;">
-                    <p style="margin-bottom: 10px;">👀 Ayo cari benda-benda di lapangan:</p>
+                    <p style="margin-bottom: 10px;">👀 Ayo cari benda-benda di perpustakaan:</p>
                     <ul style="text-align: left;">
-                        <li>🌸 Cari bunga</li>
-                        <li>🏀 Cari bola basket</li>
-                        <li>🪑 Cari ayunan</li>
+                        <li>🪑 Cari Meja</li>
+                        <li>🔡 Cari Abjad</li>
+                        <li>🅰️ Cari Huruf A</li>
                     </ul>
                     <p style="margin-top: 20px;">🎯 Tekan benda jika kamu menemukannya!</p>
                 </div>

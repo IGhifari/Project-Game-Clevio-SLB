@@ -14,9 +14,10 @@ export default function KamarMandiRumah() {
     const [foundObjects, setFoundObjects] = useState([]);
     const [timeLeft, setTimeLeft] = useState(30); // Waktu dalam detik
     const [isGameOver, setIsGameOver] = useState(false);
+    const [isMissionShown, setIsMissionShown] = useState(false); // Tambahkan state ini
 
     const objectData = [
-        { name: '🪥 Sikat Gigi', image: PastaGigi },
+        { name: '🪥 Pasta GiGi', image: PastaGigi },
         { name: '🧼 Keset', image: kesetKamarMandi },
         { name: '🧴 Jendela', image: jendelaKamarMandi },
     ];
@@ -49,7 +50,7 @@ export default function KamarMandiRumah() {
                 <div style="font-family: Comic Sans MS; font-size: 18px;">
                     <p style="margin-bottom: 10px;">👀 Ayo cari benda-benda di kamar mandimu:</p>
                     <ul style="text-align: left; margin-top: 20px;">
-                        <li>🪥 Cari sikat gigi</li>
+                        <li>🪥 Cari Pasta Gigi</li>
                         <li>🛁 Temukan keset</li>
                         <li>🚪 Cari jendela</li>
                     </ul>
@@ -63,13 +64,14 @@ export default function KamarMandiRumah() {
         }).then((result) => {
             if (result.isConfirmed) {
                 setMission('Temukan benda-benda di kamar mandi');
+                setIsMissionShown(true); // Aktifkan timer setelah Swal ditutup
             }
         });
     }, []);
 
     // Sistem waktu
     useEffect(() => {
-        if (timeLeft > 0) {
+        if (isMissionShown && timeLeft > 0) { // Timer hanya berjalan jika misi sudah ditampilkan
             const timer = setInterval(() => {
                 setTimeLeft((prevTime) => prevTime - 1);
             }, 1000);
@@ -78,7 +80,7 @@ export default function KamarMandiRumah() {
             setIsGameOver(true);
             showVictoryCard(foundObjects.length); // Tampilkan kartu berdasarkan jumlah bintang
         }
-    }, [timeLeft, isGameOver]);
+    }, [isMissionShown, timeLeft, isGameOver]);
 
     const showVictoryCard = (starsEarned) => {
         // Save stars for this stage
@@ -131,7 +133,7 @@ export default function KamarMandiRumah() {
                     width: '70px',
                     height: 'auto'
                 }}
-                onClick={() => handleObjectFound('🪥 Sikat Gigi')}
+                onClick={() => handleObjectFound('Pasta GiGi')}
             />
 
             {/* Keset */}

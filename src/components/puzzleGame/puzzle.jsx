@@ -73,9 +73,13 @@ export default function Puzzle() {
         e.preventDefault();
         if (!draggedPiece) return;
 
-        const targetSlot = slots.find(slot => slot.id === slotId);
-        const existingPieceId = targetSlot?.pieceId;
+        // Temukan slot lama tempat piece ini berada
+        const oldSlotId = slots.find(slot => slot.pieceId === draggedPiece.id)?.id;
 
+        // Temukan piece yang ada di slot tujuan (jika ada)
+        const existingPieceId = slots.find(slot => slot.id === slotId)?.pieceId;
+
+        // Update posisi pieces
         const updatedPieces = pieces.map(piece => {
             if (piece.id === draggedPiece.id) {
                 return { ...piece, currentPosition: slotId };
@@ -86,6 +90,7 @@ export default function Puzzle() {
             return piece;
         });
 
+        // Update slot
         const updatedSlots = slots.map(slot => {
             if (slot.id === slotId) {
                 return {
@@ -94,7 +99,7 @@ export default function Puzzle() {
                     pieceId: draggedPiece.id
                 };
             }
-            if (slot.pieceId === draggedPiece.id) {
+            if (slot.id === oldSlotId) {
                 return {
                     ...slot,
                     occupied: false,
@@ -219,7 +224,7 @@ export default function Puzzle() {
                         boxShadow: '0 8px 16px rgba(0,0,0,0.1)',
                     }}>
                         {pieces.map((piece) => (
-                            !piece.currentPosition && (
+                            piece.currentPosition === null && (
                                 <div
                                     key={piece.id}
                                     draggable

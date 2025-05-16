@@ -62,6 +62,13 @@ export default function Puzzle() {
         setDraggedPiece(piece);
         e.dataTransfer.setData('text/plain', piece.id);
         e.dataTransfer.effectAllowed = 'move';
+        
+        // Create a drag image (optional)
+        const dragImage = e.target.cloneNode(true);
+        dragImage.style.opacity = '0.5';
+        document.body.appendChild(dragImage);
+        e.dataTransfer.setDragImage(dragImage, 75, 75);
+        setTimeout(() => document.body.removeChild(dragImage), 0);
     };
 
     const handleDragOver = (e) => {
@@ -218,8 +225,10 @@ export default function Puzzle() {
                         borderRadius: '15px',
                         boxShadow: '0 8px 16px rgba(0,0,0,0.1)',
                     }}>
-                        {pieces.map((piece) => (
-                            !piece.currentPosition && (
+                        {pieces.map((piece) => {
+                            // Only hide the piece if it's been placed in a slot
+                            const shouldShow = !piece.currentPosition;
+                            return shouldShow && (
                                 <div
                                     key={piece.id}
                                     draggable
@@ -233,10 +242,13 @@ export default function Puzzle() {
                                         border: '2px solid #fff',
                                         borderRadius: '8px',
                                         cursor: 'move',
+                                        transition: 'all 0.2s ease',
+                                        opacity: draggedPiece?.id === piece.id ? 0.5 : 1, // Add opacity during drag
                                     }}
+                                    onDragEnd={() => setDraggedPiece(null)}
                                 />
-                            )
-                        ))}
+                            );
+                        })}
                     </div>
 
                     {/* Slot tempat menaruh potongan */}

@@ -53,7 +53,7 @@ export default function RumahMain() {
                     <ul style="text-align: left;">
                         <li>🟡 Cari bantal berwarna kuning</li>
                         <li>💡 Cari lampu tidur</li>
-                        <li>🧸 Cari boneka bebek</li>
+                        <li>🧸 Cari boneka</li>
                     </ul>
                     <p style="margin-top: 20px;">🎯 Tekan benda jika kamu menemukannya!</p>
                 </div>
@@ -133,7 +133,7 @@ export default function RumahMain() {
                 onClick={() => handleObjectFound('🧸 Boneka')} />
 
             <button onClick={() => setShowObjectCard(true)}
-                className="fixed bottom-4 right-4 bg-blue-500 text-white px-4 py-2 rounded-full shadow-lg hover:bg-blue-600">
+                className="fixed bottom-4 cursor-pointer right-4 bg-blue-500 text-white px-4 py-2 rounded-full shadow-lg hover:bg-blue-600">
                 📖 Lihat Benda yang Dicari
             </button>
 

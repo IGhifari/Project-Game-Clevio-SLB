@@ -69,18 +69,30 @@ export default function HalamanAwal() {
     <div
       className="h-screen w-screen flex items-center justify-center relative overflow-hidden"
       style={{
-        backgroundImage: "url('../src/assets/background/menubg.jpg')",
         backgroundSize: 'cover',
         backgroundPosition: 'center',
         opacity: isTransitioning ? 0 : 1,
         transition: 'opacity 0.5s ease-in-out',
       }}
     >
+      {/* Background Video */}
+      <video
+        autoPlay
+        loop
+        muted
+        playsInline
+        className="absolute top-0 left-0 w-full h-full object-cover z-0"
+        style={{ pointerEvents: 'none' }}
+      >
+        <source src="../src/assets/background/menubg.mp4" type="video/mp4" />
+        Your browser does not support the video tag.
+      </video>
+
       {/* Animasi Balon */}
       <img
         src="../src/assets/object/balon.gif"
         alt="Balon Pink"
-        className="absolute top-0 left-20 w-100 h-100 animate-bounce-slow opacity-70"
+        className="absolute top-0 left-20 w-100 h-100 animate-bounce-slow opacity-70 z-10"
         style={{
           opacity: isTransitioning ? 0 : 0.7,
           transition: 'opacity 0.5s ease-in-out',
@@ -89,7 +101,7 @@ export default function HalamanAwal() {
       <img
         src="../src/assets/object/balon.gif"
         alt="Balon Kuning"
-        className="absolute top-1/3 right-20 w-100 h-100 animate-bounce-slow opacity-70"
+        className="absolute top-1/3 right-20 w-100 h-100 animate-bounce-slow opacity-70 z-10"
         style={{
           opacity: isTransitioning ? 0 : 0.7,
           transition: 'opacity 0.5s ease-in-out',
@@ -99,16 +111,16 @@ export default function HalamanAwal() {
       {/* Animasi Bintang */}
       {showStars && (
         <>
-          <div className="absolute top-1/4 left-1/4 animate-float" style={{ animationDelay: '0s' }}>⭐</div>
-          <div className="absolute top-1/3 right-1/3 animate-float" style={{ animationDelay: '0.5s' }}>⭐</div>
-          <div className="absolute bottom-1/4 left-1/3 animate-float" style={{ animationDelay: '1s' }}>⭐</div>
-          <div className="absolute bottom-1/3 right-1/4 animate-float" style={{ animationDelay: '1.5s' }}>⭐</div>
+          <div className="absolute top-1/4 left-1/4 animate-float z-10" style={{ animationDelay: '0s' }}>⭐</div>
+          <div className="absolute top-1/3 right-1/3 animate-float z-10" style={{ animationDelay: '0.5s' }}>⭐</div>
+          <div className="absolute bottom-1/4 left-1/3 animate-float z-10" style={{ animationDelay: '1s' }}>⭐</div>
+          <div className="absolute bottom-1/3 right-1/4 animate-float z-10" style={{ animationDelay: '1.5s' }}>⭐</div>
         </>
       )}
 
       {/* Card tengah */}
       <div 
-        className="bg-white/80 backdrop-blur-md rounded-2xl shadow-2xl py-10 flex flex-col items-center gap-8 max-w-xs sm:max-w-md"
+        className="bg-white/80 backdrop-blur-md rounded-2xl shadow-2xl py-10 flex flex-col items-center gap-8 max-w-xs sm:max-w-md z-10"
         style={{
           transform: isTransitioning ? 'scale(0.95)' : 'scale(1)',
           opacity: isTransitioning ? 0 : 1,

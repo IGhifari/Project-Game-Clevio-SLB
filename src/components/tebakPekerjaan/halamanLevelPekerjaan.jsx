@@ -6,7 +6,7 @@ import Swal from "sweetalert2";
 const maxLevel = Number(localStorage.getItem("pekerjaanLevelUnlocked") || 1);
 
 const levels = [
-  { number: 1, stars: 1, unlocked: true },
+  { number: 1, stars: 1, unlocked: true },  
   { number: 2, stars: 0, unlocked: maxLevel >= 2 },
   { number: 3, stars: 0, unlocked: maxLevel >= 3 },
   { number: 4, stars: 0, unlocked: maxLevel >= 4 },
@@ -65,7 +65,7 @@ export default function HalamanLevelPekerjaan() {
         backgroundImage: `url(${pekerjaanbg})`,
         backgroundSize: "cover",
         minHeight: "100vh",
-        padding: "40px 0",
+        padding: "95px 0",
         position: "relative",
         opacity: isPageLoaded ? 1 : 0,
         transform: isPageLoaded ? 'translateY(0)' : 'translateY(20px)',

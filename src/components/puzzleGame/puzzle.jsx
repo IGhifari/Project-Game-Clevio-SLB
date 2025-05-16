@@ -202,7 +202,7 @@ export default function Puzzle() {
                 fontFamily: 'Comic Sans MS, cursive',
                 animation: 'bounce 2s infinite'
             }}>
-                🧩 Mini Puzzle Gamefgahfis
+                🧩 Mini Puzzle Game
             </h1>
 
             <div style={{

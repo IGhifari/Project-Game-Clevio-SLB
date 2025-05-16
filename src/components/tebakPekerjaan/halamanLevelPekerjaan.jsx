@@ -52,8 +52,11 @@ export default function HalamanLevelPekerjaan() {
       }).then((result) => {
         if (result.isConfirmed) {
           navigate(`/level${level.number}`);
-          // Setelah setResult("benar");
-          localStorage.setItem("pekerjaanLevelUnlocked", JSON.stringify(Math.max(2, Number(localStorage.getItem("pekerjaanLevelUnlocked") || 1) + 1)));
+          // Update level unlocked hanya jika level yang dimainkan adalah level tertinggi yang sudah terbuka
+          const currentUnlocked = Number(localStorage.getItem("pekerjaanLevelUnlocked") || 1);
+          if (level.number === currentUnlocked && currentUnlocked < 10) {
+            localStorage.setItem("pekerjaanLevelUnlocked", JSON.stringify(Math.max(2, Number(localStorage.getItem("pekerjaanLevelUnlocked") || 1) + 1)));
+          }
         }
       });
     }

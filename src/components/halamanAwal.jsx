@@ -1,6 +1,6 @@
 import Swal from 'sweetalert2';
 import { useState, useEffect } from 'react';
-import animationVideo from "../assets/background/animation.mp4"; // pastikan path benar
+import animationVideo from "../assets/background/animationn.mp4"; // pastikan path benar
 
 export default function HalamanAwal() {
   const [isTransitioning, setIsTransitioning] = useState(false);
@@ -110,25 +110,7 @@ export default function HalamanAwal() {
             Your browser does not support the video tag.
           </video>
 
-          {/* Animasi Balon */}
-          <img
-            src="../src/assets/object/balon.gif"
-            alt="Balon Pink"
-            className="absolute top-0 left-20 w-100 h-100 animate-bounce-slow opacity-70 z-10"
-            style={{
-              opacity: isTransitioning ? 0 : 0.7,
-              transition: 'opacity 0.5s ease-in-out',
-            }}
-          />
-          <img
-            src="../src/assets/object/balon.gif"
-            alt="Balon Kuning"
-            className="absolute top-1/3 right-20 w-100 h-100 animate-bounce-slow opacity-70 z-10"
-            style={{
-              opacity: isTransitioning ? 0 : 0.7,
-              transition: 'opacity 0.5s ease-in-out',
-            }}
-          />
+          
 
           {/* Animasi Bintang */}
           {showStars && (

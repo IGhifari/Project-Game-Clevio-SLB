@@ -62,8 +62,7 @@ export default function Puzzle() {
         setDraggedPiece(piece);
         e.dataTransfer.setData('text/plain', piece.id);
         e.dataTransfer.effectAllowed = 'move';
-        
-        // Create a drag image (optional)
+
         const dragImage = e.target.cloneNode(true);
         dragImage.style.opacity = '0.5';
         document.body.appendChild(dragImage);
@@ -80,13 +79,9 @@ export default function Puzzle() {
         e.preventDefault();
         if (!draggedPiece) return;
 
-        // Temukan slot lama tempat piece ini berada
         const oldSlotId = slots.find(slot => slot.pieceId === draggedPiece.id)?.id;
-
-        // Temukan piece yang ada di slot tujuan (jika ada)
         const existingPieceId = slots.find(slot => slot.id === slotId)?.pieceId;
 
-        // Update posisi pieces
         const updatedPieces = pieces.map(piece => {
             if (piece.id === draggedPiece.id) {
                 return { ...piece, currentPosition: slotId };
@@ -97,7 +92,6 @@ export default function Puzzle() {
             return piece;
         });
 
-        // Update slot
         const updatedSlots = slots.map(slot => {
             if (slot.id === slotId) {
                 return {
@@ -231,11 +225,12 @@ export default function Puzzle() {
                         boxShadow: '0 8px 16px rgba(0,0,0,0.1)',
                     }}>
                         {pieces.map((piece) => (
-                            !piece.currentPosition && (
+                            piece.currentPosition === null && (
                                 <div
                                     key={piece.id}
                                     draggable
                                     onDragStart={(e) => handleDragStart(e, piece)}
+                                    onDragEnd={() => setDraggedPiece(null)}
                                     style={{
                                         width: '150px',
                                         height: '150px',
@@ -246,12 +241,11 @@ export default function Puzzle() {
                                         borderRadius: '8px',
                                         cursor: 'move',
                                         transition: 'all 0.2s ease',
-                                        opacity: draggedPiece?.id === piece.id ? 0.5 : 1, // Add opacity during drag
+                                        opacity: draggedPiece?.id === piece.id ? 0.5 : 1,
                                     }}
-                                    onDragEnd={() => setDraggedPiece(null)}
                                 />
-                            );
-                        })}
+                            )
+                        ))}
                     </div>
 
                     {/* Slot tempat menaruh potongan */}
@@ -307,72 +301,21 @@ export default function Puzzle() {
                     flexDirection: 'column',
                     gap: '20px',
                 }}>
-                    {/* Gambar referensi */}
                     <div style={{
                         background: 'rgba(255,255,255,0.9)',
                         padding: '20px',
                         borderRadius: '15px',
-                        boxShadow: '0 8px 16px rgba(0,0,0,0.1)',
-                        display: 'flex',
-                        flexDirection: 'column',
-                        alignItems: 'center',
+                        boxShadow: '0 6px 12px rgba(0,0,0,0.1)',
                     }}>
-                        <h3 style={{
-                            color: '#81c784',
-                            fontSize: '1.5rem',
-                            fontFamily: 'Comic Sans MS, cursive',
-                        }}>
-                            Gambar Asli
-                        </h3>
-                        <img 
-                            src={puzzleBg} 
-                            alt="Gambar Asli"
-                            style={{
-                                width: '300px',
-                                height: '300px',
-                                objectFit: 'cover',
-                                borderRadius: '6px',
-                            }}
+                        <h3 style={{ fontFamily: 'Comic Sans MS', marginBottom: '10px' }}>Gambar Referensi</h3>
+                        <img
+                            src={puzzleBg}
+                            alt="Gambar Referensi"
+                            style={{ width: '300px', height: '300px', objectFit: 'cover', borderRadius: '10px' }}
                         />
-                    </div>
-
-                    {/* Petunjuk Main */}
-                    <div style={{
-                        background: '#fff',
-                        padding: '15px 20px',
-                        borderRadius: '15px',
-                        fontFamily: 'Comic Sans MS, cursive',
-                        color: '#4caf50',
-                        fontSize: '1.1rem',
-                        boxShadow: '0 4px 10px rgba(0,0,0,0.1)',
-                        lineHeight: 1.8,
-                        maxWidth: '400px'
-                    }}>
-                        <h4 style={{ margin: 0, fontSize: '1.2rem', color: '#388e3c' }}>🧑‍🏫 Cara Bermain</h4>
-                        <ul style={{ paddingLeft: '20px', marginTop: '10px' }}>
-                            <li>👆 Klik dan tahan potongan gambar</li>
-                            <li>➡️ Geser ke kotak kosong</li>
-                            <li>🔍 Lihat gambar asli sebagai panduan</li>
-                            <li>🔄 Klik potongan untuk mengembalikan</li>
-                            <li>🎉 Susun semua agar jadi gambar utuh!</li>
-                        </ul>
                     </div>
                 </div>
             </div>
-
-            {/* Animasi tambahan */}
-            <style>
-                {`
-                    @keyframes float {
-                        0%, 100% { transform: translateY(0) rotate(0deg); }
-                        50% { transform: translateY(-20px) rotate(180deg); }
-                    }
-                    @keyframes bounce {
-                        0%, 100% { transform: translateY(0); }
-                        50% { transform: translateY(-10px); }
-                    }
-                `}
-            </style>
         </div>
     );
 }

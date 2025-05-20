@@ -169,7 +169,7 @@ export default function KamarMandiRumah() {
                 onClick={() => setShowObjectCard(true)}
                 className="fixed bottom-4 right-4 bg-blue-500 text-white px-4 py-2 rounded-full cursor-pointer shadow-lg hover:bg-blue-600 transition-colors"
             >
-                📖 Lihat Benda
+                📖 Lihat Benda yang Dicari
             </button>
 
             {/* Tampilkan kartu benda */}

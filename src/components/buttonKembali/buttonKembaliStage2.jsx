@@ -11,7 +11,7 @@ export default function ButtonKembaliStage2 () {
         <button
         onClick={() => {
 
-                navigate('/halamanlevel');
+                navigate('/halamanLevelPekerjaan');
             
         }}
         className="back-button"

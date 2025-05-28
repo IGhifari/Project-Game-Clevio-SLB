@@ -7,7 +7,7 @@ import CardObjectPerpustakaan from './objectSekolah/cardObjectPerpustakaan';
 import PerpustakaanStar from './pointStar/sekolahStar/perpustakaanStar';
 import WaktuMain from './waktu/waktuMain';
 import BgPerpustakaanSekolah from "../assets/background/perpustakaanSekolah.png"
-
+import ButtonKembaliTemukanBenda from './buttonKembali/buttonKembaliTemukanBenda';
 export default function PerpustakaanSekolah () {
     const [mission, setMission] = useState('');
     const [showObjectCard, setShowObjectCard] = useState(false);
@@ -129,7 +129,7 @@ export default function PerpustakaanSekolah () {
         >
             <WaktuMain timeLeft={timeLeft} totalTime={30} />
             <PerpustakaanStar    foundObjects={foundObjects} />
-            
+            <ButtonKembaliTemukanBenda/>
             <img 
                 src={hurufA}
                 alt="hurufA"

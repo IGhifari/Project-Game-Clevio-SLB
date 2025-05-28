@@ -8,7 +8,7 @@ import CardObjectKelas from './objectSekolah/cardObjectKelas';
 import Swal from 'sweetalert2';
 import ClassStar from './pointStar/sekolahStar/classStar';
 import WaktuMain from './waktu/waktuMain';
-
+import ButtonKembaliTemukanBenda from './buttonKembali/buttonKembaliTemukanBenda';
 export default function SekolahMain() {
     const [mission, setMission] = useState('');
     const [showObjectCard, setShowObjectCard] = useState(false);
@@ -118,7 +118,7 @@ export default function SekolahMain() {
         >
             <WaktuMain timeLeft={timeLeft} totalTime={30} />
             <ClassStar foundObjects={foundObjects} />
-
+            <ButtonKembaliTemukanBenda/>
             <img
                 src={jamSekolah}
                 alt="Jam"

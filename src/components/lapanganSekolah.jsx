@@ -7,7 +7,7 @@ import ayunan from '../assets/object/lapangan_sekolah/ayunan.png';
 import CardObjectlapangan from './objectSekolah/cardObjectlapangan';
 import LapanganStar from './pointStar/sekolahStar/lapanganStar';
 import WaktuMain from './waktu/waktuMain';
-
+import ButtonKembaliTemukanBenda from './buttonKembali/buttonKembaliTemukanBenda';
 export default function LapanganSekolah() {
     const [mission, setMission] = useState('');
     const [showObjectCard, setShowObjectCard] = useState(false);
@@ -118,7 +118,7 @@ export default function LapanganSekolah() {
         >
             <WaktuMain timeLeft={timeLeft} totalTime={30} />
             <LapanganStar foundObjects={foundObjects} />
-            
+            <ButtonKembaliTemukanBenda/>
             <img 
                 src={bunga}
                 alt="bunga"

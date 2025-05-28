@@ -26,10 +26,13 @@ import Puzzle from './components/puzzleGame/puzzle';
 import Puzzle2 from './components/puzzleGame/puzzle2';
 import Puzzle3 from './components/puzzleGame/puzzle3';
 import RewardPuzzle from './components/puzzleGame/rewardPuzzle';
+import GlobalMusic from "./components/music/GlobalMusic";
+
 function App() {
 
   return (
     <BrowserRouter>
+      <GlobalMusic />
       <Routes>
         <Route path="/" element={<HalamanAwal />} />
         <Route path="/halamanlevel" element={<HalamanLevel />} />
@@ -56,6 +59,7 @@ function App() {
         <Route path='/puzzlegame2' element={<Puzzle2/>}></Route>
         <Route path='/puzzlegame3' element={<Puzzle3/>}></Route>
         <Route path='rewardpuzzle' element={<RewardPuzzle/>}></Route>
+        <Route path='globalmusic' element={<GlobalMusic/>}></Route>
 
         {/* Tambahkan route lainnya sesuai kebutuhan */}
 
